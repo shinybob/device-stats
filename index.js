@@ -57,12 +57,12 @@ app.get('/screenStats', function(sReq, sRes){
     output.viewport.isLandscape = true;
     output.viewport.isTablet = true;
 
-    fs.writeJson('static-assets/saved/' + sReq.query.deviceName + '.json', output);
+    // fs.writeJson('static-assets/saved/' + sReq.query.deviceName + '.json', output);
 
     console.log('****************************************');
     console.log(JSON.stringify(output));
     console.log('****************************************');
     console.log('Saved');
 
-    sRes.send('<script>window.location = window.location</script>');
+    sRes.send('Thanks :)');
 });
