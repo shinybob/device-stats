@@ -23,7 +23,7 @@ exports.init = function (callback) {
 exports.addDevice = function(data) {
     console.log('saving to database...');
     console.log('****************************************');
-    console.log(JSON.stringify(output));
+    console.log(JSON.stringify(data));
     console.log('****************************************');
 
 
