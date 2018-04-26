@@ -24,7 +24,7 @@ var url = 'mongodb://shinybob:kennard@ds159509.mlab.com:59509/device-stats';
 
 var _db;
 
-exports.init_db = function (callback) {
+exports.init = function (callback) {
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
         console.log("Connected correctly to MongoDB server.");
