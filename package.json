@@ -22,7 +22,9 @@
   "dependencies": {
     "body-parser": "1.x",
     "express": "^4.16.3",
-    "fs-extra": "^5.0.0"
+    "fs-extra": "^5.0.0",
+    "mongodb": "2.x",
+    "async": "1.x"
   },
   "homepage": "https://github.com/shinybob/device-stats#readme"
 }

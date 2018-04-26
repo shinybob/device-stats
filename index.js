@@ -1,11 +1,26 @@
 const fs = require('fs-extra');
 const express = require('express');
+const db = require("/db");
 
 const app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + "/static-assets"));
+
+
+db.init(function (err) {
+    if (err) {
+        console.log("Error initialising DB, aborting: " + JSON.stringify(err, 0, 2));
+        exit(-1);
+    } else {
+        console.error("DB initialised...");
+        console.error("Starting Server...");
+        app.listen(app.get('port'), () => {
+            console.log("Web sever started @ http://localhost:" + app.get('port'));
+        });
+    }
+});
 
 app.get('/screenStats', function(sReq, sRes){
     var output = {};
@@ -50,8 +65,4 @@ app.get('/screenStats', function(sReq, sRes){
     console.log('Saved');
 
     sRes.send('<script>window.location = window.location</script>');
-});
-
-app.listen(app.get('port'), () => {
-    console.log("Web sever started @ http://localhost:" + app.get('port'));
 });
