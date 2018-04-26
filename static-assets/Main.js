@@ -2,10 +2,7 @@ window.onload = init;
 
 function init() {
     document.getElementById('fullScreen').addEventListener("click", this.goFullScreen.bind(this));
-
     window.onresize = update;
-    document.getElementById('server').onChange = update;
-
     update();
 }
 

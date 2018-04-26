@@ -3,26 +3,8 @@ var MongoClient = require('mongodb').MongoClient,
     async = require('async'),
     assert = require('assert');
 
-// Connection URL
-// var url = 'mongodb://localhost:27017/shiny-board';
-// var url = 'mongodb://shinybob:kennard@ds049446.mlab.com:49446/shiny-board';
 var url = 'mongodb://shinybob:kennard@ds159509.mlab.com:59509/device-stats';
-/************************************************************
- * Running locally
- ************************************************************
- *
- * Set BD path in seperate terminal
- * mongod --dbpath /db
- *
- * Then start server
- * npm start
- *
- * Then go to localhost
- * http://localhost:5000/#/cells
- *
- ************************************************************/
-
-var _db;
+var _db, devices;
 
 exports.init = function (callback) {
     MongoClient.connect(url, function(err, db) {
@@ -31,10 +13,29 @@ exports.init = function (callback) {
         _db = db;
 
         // Got the connection, now get the recipes collection. It's easy.
-        exports.devices = _db.collection("devices");
+        devices = _db.collection("devices");
+        exports.devices = devices;
         callback(null);
     });
-}    
+};
 
-// Anybody can just grab this and start making queries on it if they want.
+
+exports.addDevice = function(data) {
+    console.log('saving to database...');
+    console.log('****************************************');
+    console.log(JSON.stringify(output));
+    console.log('****************************************');
+
+
+    async.waterfall([
+            function (cb) {
+                data = JSON.parse(JSON.stringify(data));
+                data.cell_id = 'id' + Date.now();
+                devices.insertOne(data, { w: 1 }, cb);
+            }
+        ], function (err, results) {
+            console.log('done!');
+        });
+};
+
 exports.devices = null;

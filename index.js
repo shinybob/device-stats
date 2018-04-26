@@ -59,10 +59,6 @@ app.get('/screenStats', function(sReq, sRes){
 
     // fs.writeJson('static-assets/saved/' + sReq.query.deviceName + '.json', output);
 
-    console.log('****************************************');
-    console.log(JSON.stringify(output));
-    console.log('****************************************');
-    console.log('Saved');
-
+    db.addDevice(output);
     sRes.send('Thanks :)');
 });
