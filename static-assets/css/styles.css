@@ -1,0 +1,174 @@
+body {
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+    color: white;
+    background-color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding-top: 40px;
+    margin: 0 0 200% 0 ;
+}
+
+.message {
+    text-align: center;
+    font-size: 28px;
+    user-select: none;
+}
+
+.input {
+    text-align: center;
+    font-size: 28px;
+    user-select: none;
+    padding: 10px;
+    width: 80%;
+    margin: 0 10% 0 10%;
+    box-sizing: border-box;
+    border: 3px solid black;
+    border-radius: 4px;
+}
+
+.input:focus {
+    border: 3px solid #4CAF50;
+    outline: none;
+ }
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 40%;
+    margin: 10px 30% 0 30%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.button:disabled {
+    /*background-color: #CCCCCC;*/
+    color: #999999;
+}
+
+/*body {*/
+    /*color: #333333;*/
+    /*background-color: white;*/
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    /*font-size: 12px;*/
+    /*margin: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*min-height: 100%;*/
+/*}*/
+
+/*.divider {*/
+    /*float: left;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*border-bottom: dashed #444444 1px;*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+/*}*/
+
+/*.container {*/
+    /*!*overflow: hidden;*!*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*max-width: 320px;*/
+    /*margin: auto;*/
+/*}*/
+
+/*.header-container {*/
+    /*position: fixed;*/
+    /*width: 100%;*/
+    /*top:0;*/
+    /*background-color: #222222;*/
+    /*padding: 10px;*/
+    /*border-bottom: 1px solid #000000;*/
+    /*box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, .5)*/
+/*}*/
+
+/*.header {*/
+    /*color: #ff8100;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*font-size: 26px;*/
+/*}*/
+
+
+/*.footer-container {*/
+    /*float: left;*/
+    /*position: fixed;*/
+    /*bottom: 0px;*/
+    /*padding: 5px;*/
+    /*width: 100%;*/
+    /*background-color: #222222;*/
+    /*border-top: solid #000000 1px;*/
+    /*box-shadow: 0px -1px 20px 2px rgba(0, 0, 0, .5)*/
+/*}*/
+
+/*.footer-text {*/
+    /*color: #ff8100;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+/*}*/
+
+/*.footer-contact {*/
+    /*color: #999999;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*user-select: none;*/
+/*}*/
+
+/*.disabled {*/
+    /*background-color: #c6c6c6;*/
+    /*color: #515151;*/
+    /*border: 1px solid black;*/
+/*}*/
+
+/*label {*/
+    /*display: block;*/
+/*}*/
+
+/*input {*/
+    /*border: 1px solid black;*/
+    /*padding-left: 5px;*/
+    /*box-sizing: border-box;*/
+    /*display: block;*/
+    /*font-size: 18px;*/
+    /*width: 100%;*/
+    /*margin-bottom: 5px;*/
+    /*text-wrap: normal;*/
+    /*word-wrap: break-word;*/
+    /*word-break: break-all;*/
+/*}*/
+
+/*button {*/
+    /*font-size: 16px;*/
+    /*font-weight: 600;*/
+    /*height: 30px;*/
+    /*border: 1px solid #333333;*/
+    /*background-color: #3c9146;*/
+    /*width: 100%;*/
+/*}*/
+
+/*button:hover {*/
+    /*background-color: #ff6000;*/
+/*}*/
+
+/*button:disabled {*/
+    /*background-color: #555555;*/
+/*}*/
