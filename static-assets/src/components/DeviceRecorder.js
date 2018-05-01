@@ -1,5 +1,6 @@
 const Input = require('./../utils/Input').default;
 const Message = require('./../utils/Message').default;
+const FullScreenUtil = require('./../utils/FullScreenUtil').default;
 
 export default class DeviceRecorder {
 
@@ -36,7 +37,7 @@ export default class DeviceRecorder {
 
     onClick() {
         window.onresize = this.onResize.bind(this);
-        this.enterFullScreen(document.documentElement);
+        FullScreenUtil.enterFullScreen();
         this.message.show('Rotate The Device');
     }
 
@@ -109,20 +110,5 @@ export default class DeviceRecorder {
     onSubmitSuccefull() {
         this.message.show('Values submitted!');
         setTimeout(this.controller.showMenu.bind(this.controller), 3000);
-    }
-
-    enterFullScreen(element) {
-        if(element.requestFullscreen) {
-            element.requestFullscreen();
-        }
-        else if(element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        }
-        else if(element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        }
-        else if(element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-        }
     }
 }

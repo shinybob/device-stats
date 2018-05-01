@@ -1,7 +1,8 @@
 const Menu = require('./components/Menu').default;
-const DeviceRecorder = require('./components/DeviceRecorder').default;
 const DeviceList = require('./components/DeviceList').default;
 const Header = require('./components/Header').default;
+const DeviceRecorder = require('./components/DeviceRecorder').default;
+const FullScreenUtil = require('./utils/FullScreenUtil').default;
 
 export default class Controller {
 
@@ -26,6 +27,9 @@ export default class Controller {
     }
 
     showMenu() {
+        FullScreenUtil.isFullScreen()
+        FullScreenUtil.exitFullScreen();
+        FullScreenUtil.isFullScreen()
         this.hideAll();
         this.header.show('Device Monkey', false);
         this.menu.show();

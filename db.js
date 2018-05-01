@@ -12,8 +12,8 @@ var MongoClient = require('mongodb').MongoClient,
  * mongod --dbpath /db
  ************************************************************/
 
-// var url = 'mongodb://localhost:27017/device-stats';
-var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
+var url = 'mongodb://localhost:27017/device-stats';
+// var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
 var _db, devices;
 
 exports.init = function (callback) {

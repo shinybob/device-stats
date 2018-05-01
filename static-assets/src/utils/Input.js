@@ -3,13 +3,21 @@ export default class Input {
     constructor() {
         this.container = document.getElementById('container');
 
-        this.input = document.createElement('INPUT');
-        this.input.className = 'input';
-
         this.button = document.createElement('BUTTON');
         this.button.addEventListener("click", this.onClick.bind(this));
         this.button.className = 'button';
         this.button.innerText = "Next";
+
+        const b = this.button;
+
+        this.input = document.createElement('INPUT');
+        this.input.className = 'input';
+        this.input.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    b.click();
+                }
+            });
     }
 
     onClick() {

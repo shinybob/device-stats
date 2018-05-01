@@ -84,13 +84,21 @@ var Input = function () {
 
         this.container = document.getElementById('container');
 
-        this.input = document.createElement('INPUT');
-        this.input.className = 'input';
-
         this.button = document.createElement('BUTTON');
         this.button.addEventListener("click", this.onClick.bind(this));
         this.button.className = 'button';
         this.button.innerText = "Next";
+
+        var b = this.button;
+
+        this.input = document.createElement('INPUT');
+        this.input.className = 'input';
+        this.input.addEventListener("keyup", function (event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                b.click();
+            }
+        });
     }
 
     _createClass(Input, [{
@@ -208,9 +216,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Menu = __webpack_require__(5).default;
-var DeviceRecorder = __webpack_require__(10).default;
 var DeviceList = __webpack_require__(9).default;
 var Header = __webpack_require__(8).default;
+var DeviceRecorder = __webpack_require__(10).default;
+var FullScreenUtil = __webpack_require__(11).default;
 
 var Controller = function () {
     function Controller() {
@@ -240,6 +249,9 @@ var Controller = function () {
     }, {
         key: 'showMenu',
         value: function showMenu() {
+            FullScreenUtil.isFullScreen();
+            FullScreenUtil.exitFullScreen();
+            FullScreenUtil.isFullScreen();
             this.hideAll();
             this.header.show('Device Monkey', false);
             this.menu.show();
@@ -568,6 +580,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Input = __webpack_require__(0).default;
 var Message = __webpack_require__(1).default;
+var FullScreenUtil = __webpack_require__(11).default;
 
 var DeviceRecorder = function () {
     function DeviceRecorder(controller) {
@@ -608,7 +621,7 @@ var DeviceRecorder = function () {
         key: 'onClick',
         value: function onClick() {
             window.onresize = this.onResize.bind(this);
-            this.enterFullScreen(document.documentElement);
+            FullScreenUtil.enterFullScreen();
             this.message.show('Rotate The Device');
         }
     }, {
@@ -684,25 +697,72 @@ var DeviceRecorder = function () {
             this.message.show('Values submitted!');
             setTimeout(this.controller.showMenu.bind(this.controller), 3000);
         }
-    }, {
-        key: 'enterFullScreen',
-        value: function enterFullScreen(element) {
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.mozRequestFullScreen) {
-                element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) {
-                element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) {
-                element.msRequestFullscreen();
-            }
-        }
     }]);
 
     return DeviceRecorder;
 }();
 
 exports.default = DeviceRecorder;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var FullScreenUtil = function () {
+    function FullScreenUtil() {
+        _classCallCheck(this, FullScreenUtil);
+    }
+
+    _createClass(FullScreenUtil, null, [{
+        key: "isFullScreen",
+        value: function isFullScreen() {
+            return document.fullscreenElement && document.fullscreenElement !== null || document.webkitFullscreenElement && document.webkitFullscreenElement !== null || document.mozFullScreenElement && document.mozFullScreenElement !== null || document.msFullscreenElement && document.msFullscreenElement !== null;
+        }
+    }, {
+        key: "enterFullScreen",
+        value: function enterFullScreen() {
+            var docElm = document.documentElement;
+
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            } else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            } else if (docElm.msRequestFullscreen) {
+                docElm.msRequestFullscreen();
+            }
+        }
+    }, {
+        key: "exitFullScreen",
+        value: function exitFullScreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }]);
+
+    return FullScreenUtil;
+}();
+
+exports.default = FullScreenUtil;
 
 /***/ })
 /******/ ]);
