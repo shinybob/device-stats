@@ -27,7 +27,12 @@ app.post('/screenStats', function(sReq, sRes){
 
 app.get('/screenStats', function(sReq, sRes){
     db.getDevices(function(result) {
-        console.log('got it')
-        console.log(result)
+        sRes.send(result);
     })
+});
+
+app.post('/delete', function(sReq, sRes){
+    db.deleteDevice(sReq.body.cell_id, function() {
+        sRes.send({success:true});
+    });
 });

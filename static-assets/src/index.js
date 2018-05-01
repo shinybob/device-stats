@@ -1,7 +1,7 @@
-const Main = require('./Main').default;
+const Controller = require('./Controller').default;
 
 window.onload = init;
 
 function init() {
-    const main = new Main();
+    const controller = new Controller();
 }

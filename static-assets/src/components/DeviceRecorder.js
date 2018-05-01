@@ -1,9 +1,13 @@
-const Input = require('./Input').default;
-const Message = require('./Message').default;
+const Input = require('./../utils/Input').default;
+const Message = require('./../utils/Message').default;
 
-export default class Main {
+export default class DeviceRecorder {
 
-    constructor() {
+    constructor(controller) {
+        this.controller = controller;
+    }
+
+    show() {
         const container = document.createElement('div');
         container.id = 'container';
         container.className = 'container';
@@ -103,7 +107,8 @@ export default class Main {
     }
 
     onSubmitSuccefull() {
-        this.message.show('Values submitted!')
+        this.message.show('Values submitted!');
+        setTimeout(this.controller.showMenu.bind(this.controller), 3000);
     }
 
     enterFullScreen(element) {

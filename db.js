@@ -12,8 +12,8 @@ var MongoClient = require('mongodb').MongoClient,
  * mongod --dbpath /db
  ************************************************************/
 
-// var url = 'mongodb://localhost:27017/device-stats';
-var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
+var url = 'mongodb://localhost:27017/device-stats';
+// var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
 var _db, devices;
 
 exports.init = function (callback) {
@@ -30,7 +30,7 @@ exports.init = function (callback) {
 
 
 exports.addDevice = function(data) {
-    console.log('saving to database...');
+    console.log('saving device to database...');
     console.log('****************************************');
     console.log(data);
     console.log('****************************************');
@@ -50,10 +50,20 @@ exports.addDevice = function(data) {
         });
 };
 
+exports.deleteDevice = function (cell_id, callback) {
+    console.log('deleting device from database ' + cell_id + ' ...');
+
+    async.waterfall([
+        function (cb) {
+            devices.deleteOne({ cell_id: cell_id }, {w: 1}, cb);
+        }], function (err) {
+        callback(null);
+    });
+};
+
 exports.getDevices = function (callback) {
     var values = [];
-
-    var cursor = devices.find({}).limit(1);
+    var cursor = devices.find({});
 
     cursor.on("data", function (device) {
         values.push(device);
