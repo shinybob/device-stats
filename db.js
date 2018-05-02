@@ -28,6 +28,33 @@ exports.init = function (callback) {
     });
 };
 
+exports.update = function (cell_data, callback) {
+    const data = {
+            "active":cell_data.active,
+            "make":cell_data.make,
+            "model":cell_data.model,
+            "innerWidthPortrait":cell_data.innerWidthPortrait,
+            "innerHeightPortrait":cell_data.innerHeightPortrait,
+            "innerWidthLandscape":cell_data.innerWidthLandscape,
+            "innerHeightLandscape":cell_data.innerHeightLandscape,
+            "screenWidth":cell_data.screenWidth,
+            "screenHeight":cell_data.screenHeight,
+            "pixelRatio":cell_data.pixelRatio,
+            "userAgent":cell_data.userAgent,
+        };
+
+    console.log('updating device ...');
+    console.log('****************************************');
+    console.log(data);
+    console.log('****************************************');
+
+    async.waterfall([
+        function (cb) {
+            devices.updateOne({ cell_id: cell_data.cell_id }, {$set: data} , {w: 1}, cb);
+        }], function (err) {
+        callback(null);
+    });
+};
 
 exports.addDevice = function(data) {
     console.log('saving device to database...');

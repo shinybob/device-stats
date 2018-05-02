@@ -20,12 +20,63 @@ db.init(function (err) {
     }
 });
 
-app.post('/screenStats', function(sReq, sRes){
+app.post('/addDevice', function(sReq, sRes){
     db.addDevice(sReq.body);
     sRes.send(sReq.body);
 });
 
-app.get('/screenStats', function(sReq, sRes){
+app.get('/devices', function(sReq, sRes){
+    db.getDevices(function(result) {
+        const devices = [];
+
+        for(var data of result) {
+            const device = {};
+            device.name = data.model;
+            device.manafacturer = data.make;
+            device.userAgent = data.userAgent;
+            device.sizes = {
+                screen: {
+                    width:data.screenWidth,
+                    height:data.screenHeight
+                },
+                window: {
+                    portrait: {
+                        width:data.innerWidthPortrait,
+                        height:data.innerHeightPortrait
+                    },
+                    landscape: {
+                        width:data.innerWidthLandscape,
+                        height:data.innerHeightLandscape
+                    },
+                },
+                browserUI: {
+                    portrait:data.screenHeight - data.innerHeightPortrait,
+                    landscape:data.screenWidth - data.innerHeightLandscape
+                },
+                deviceFrame: {
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0
+                }
+            };
+
+            device.viewport = {
+                deviceScaleFactor:data.pixelRatio,
+                isMobile:true,
+                hasTouch:true,
+                isLandscape:false,
+                isTablet:true,
+            };
+
+            devices.push(device);
+        }
+
+        sRes.send(devices);
+    })
+});
+
+app.get('/deviceList', function(sReq, sRes){
     db.getDevices(function(result) {
         sRes.send(result);
     })
@@ -33,6 +84,12 @@ app.get('/screenStats', function(sReq, sRes){
 
 app.post('/delete', function(sReq, sRes){
     db.deleteDevice(sReq.body.cell_id, function() {
+        sRes.send({success:true});
+    });
+});
+
+app.post('/update', function(sReq, sRes){
+    db.update(sReq.body.data, function() {
         sRes.send({success:true});
     });
 });

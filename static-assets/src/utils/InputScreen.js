@@ -30,8 +30,8 @@ export default class InputScreen {
         return this.input.value;
     }
 
-    show(message, callback) {
-        this.input.value = '';
+    show(message, callback, value) {
+        this.input.value = value || '';
         this.callback = callback;
         this.container.appendChild(this.input);
         this.container.appendChild(this.button);
