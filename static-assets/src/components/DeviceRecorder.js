@@ -1,5 +1,5 @@
-const Input = require('./../utils/Input').default;
-const Message = require('./../utils/Message').default;
+const InputScreen = require('./../utils/InputScreen').default;
+const MessageScreen = require('./../utils/MessageScreen').default;
 const FullScreenUtil = require('./../utils/FullScreenUtil').default;
 
 export default class DeviceRecorder {
@@ -9,10 +9,7 @@ export default class DeviceRecorder {
     }
 
     show() {
-        const container = document.createElement('div');
-        container.id = 'container';
-        container.className = 'container';
-        document.body.appendChild(container);
+        this.container = document.getElementById('container');
 
         this.stats = {
             make:'',
@@ -21,24 +18,28 @@ export default class DeviceRecorder {
             innerHeightPortrait:0,
             innerWidthLandscape:0,
             innerHeightLandscape:0,
-            screenWidth:screen.width,
-            screenHeight:screen.height,
+            screenWidth:Math.min(screen.width, screen.height),
+            screenHeight:Math.max(screen.width, screen.height),
             pixelRatio:window.devicePixelRatio,
             userAgent:navigator.userAgent
         };
 
-        this.input = new Input();
-        this.message = new Message();
-        this.message.show('Tap Screen');
+        this.inputScreen = new InputScreen();
+        this.messageScreen = new MessageScreen();
+        this.messageScreen.show('Tap Screen');
 
-        this.onClickCallback = this.onClick.bind(this);
-        document.addEventListener('click', this.onClickCallback);
+        this.resizeCallback = this.onResize.bind(this);
+        this.fullScreenCallback = this.enterFullScreen.bind(this);
+        this.container.addEventListener('click', this.fullScreenCallback);
+
+        this.showMake();
     }
 
-    onClick() {
-        window.onresize = this.onResize.bind(this);
-        FullScreenUtil.enterFullScreen();
-        this.message.show('Rotate The Device');
+    enterFullScreen() {
+        this.container.removeEventListener('click', this.fullScreenCallback);
+        window.addEventListener('resize', this.resizeCallback);
+        // FullScreenUtil.enterFullScreen();
+        this.messageScreen.show('Rotate The Device');
     }
 
     onResize() {
@@ -48,7 +49,6 @@ export default class DeviceRecorder {
     }
 
     updateStats() {
-
         if(this.orientation === 'landscape') {
             this.stats.innerWidthLandscape = Math.max(window.innerWidth, this.stats.innerWidthLandscape);
             this.stats.innerHeightLandscape = Math.max(window.innerHeight, this.stats.innerHeightLandscape);
@@ -71,26 +71,26 @@ export default class DeviceRecorder {
         }
 
         if(done) {
-            window.onresize = null;
-            document.removeEventListener('click', this.onClickCallback);
-            this.showMake()
+            window.removeEventListener('resize', this.resizeCallback);
+            this.showMake();
         }
     }
 
     showMake() {
-        this.message.hide();
-        this.input.show('Type device make', this.showModel.bind(this));
+        this.controller.emptyContainer();
+        this.inputScreen.show('Make', this.showModel.bind(this));
     }
 
     showModel() {
-        this.stats.make = this.input.getValue();
-        this.input.show('Type device model', this.submit.bind(this));
+        this.controller.emptyContainer();
+        this.stats.make = this.inputScreen.getValue();
+        this.inputScreen.show('Model', this.submit.bind(this));
     }
 
     submit() {
-        this.stats.model = this.input.getValue();
-        this.input.hide();
-        this.message.show('Submitting device stats...');
+        this.stats.model = this.inputScreen.getValue();
+        this.controller.emptyContainer();
+        this.messageScreen.show('Submitting device stats...');
 
         const callback = this.onSubmitSuccefull.bind(this);
         const request = new XMLHttpRequest();
@@ -108,7 +108,7 @@ export default class DeviceRecorder {
     }
 
     onSubmitSuccefull() {
-        this.message.show('Values submitted!');
+        this.messageScreen.show('Values submitted!');
         setTimeout(this.controller.showMenu.bind(this.controller), 3000);
     }
 }

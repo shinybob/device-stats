@@ -1,4 +1,4 @@
-export default class Input {
+export default class InputScreen {
 
     constructor() {
         this.container = document.getElementById('container');
@@ -8,20 +8,20 @@ export default class Input {
         this.button.className = 'button';
         this.button.innerText = "Next";
 
-        const b = this.button;
+        const button = this.button;
 
         this.input = document.createElement('INPUT');
         this.input.className = 'input';
         this.input.addEventListener("keyup", function(event) {
                 event.preventDefault();
                 if (event.keyCode === 13) {
-                    b.click();
+                    button.click();
                 }
             });
     }
 
     onClick() {
-        if(this.input.value.length > 3) {
+        if(this.input.value.length > 1) {
             this.callback();
         }
     }
@@ -37,10 +37,5 @@ export default class Input {
         this.container.appendChild(this.button);
         this.input.placeholder = message;
         this.input.focus();
-    }
-
-    hide() {
-        this.container.removeChild(this.input);
-        this.container.removeChild(this.button);
     }
 }

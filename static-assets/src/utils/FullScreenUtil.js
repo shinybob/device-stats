@@ -1,9 +1,12 @@
 export default class FullScreenUtil {
+
     static isFullScreen() {
-        return (document.fullscreenElement && document.fullscreenElement !== null) ||
+        const fs = (document.fullscreenElement && document.fullscreenElement !== null) ||
             (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
             (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
             (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+        return fs || false;
     }
 
     static enterFullScreen() {

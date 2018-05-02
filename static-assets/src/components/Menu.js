@@ -5,9 +5,11 @@ export default class Menu {
     }
 
     show() {
-        const container = document.createElement('div');
-        container.id = 'container';
-        container.className = 'container';
+        const container = document.getElementById('container');
+
+        const header = document.createElement('div');
+        header.className = 'header';
+        header.innerText = 'Monocle';
 
         const deviceRecorderButton = document.createElement('div');
         deviceRecorderButton.innerText = "Add New Device";
@@ -19,8 +21,8 @@ export default class Menu {
         deviceListButton.className = "button";
         deviceListButton.addEventListener('click', this.controller.showDeviceList.bind(this.controller));
 
+        container.appendChild(header);
         container.appendChild(deviceRecorderButton);
         container.appendChild(deviceListButton);
-        document.body.appendChild(container);
     }
 }

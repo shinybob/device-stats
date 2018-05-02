@@ -1,7 +1,8 @@
-export default class Message {
+export default class MessageScreen {
 
     constructor() {
         this.container = document.getElementById('container');
+
         this.message = document.createElement('div');
         this.message.className = 'message';
     }
@@ -9,9 +10,5 @@ export default class Message {
     show(message) {
         this.container.appendChild(this.message);
         this.message.innerText = message;
-    }
-
-    hide() {
-        this.container.removeChild(this.message);
     }
 }

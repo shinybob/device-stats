@@ -1,36 +1,66 @@
-const Input = require('./../utils/Input').default;
-const Message = require('./../utils/Message').default;
+const Input = require('./../utils/InputScreen').default;
+const Message = require('./../utils/MessageScreen').default;
 
 export default class DeviceList {
 
-    constructor() {
-        this.headers= [
-            {id:'delete', label:''},
-            {id:'make', label:'make'},
-            {id:'model', label:'model'},
-            {id:'pixelRatio', label:'pixel ratio'},
-            {id:'screenHeight', label:'screen height'},
-            {id:'screenWidth', label:'screen width'},
-            {id:'innerHeightLandscape', label:'innerWidth Landscape'},
-            {id:'innerWidthLandscape', label:'innerWidth Landscape'},
-            {id:'innerHeightPortrait', label:'innerHeight portrait'},
-            {id:'innerWidthPortrait', label:'innerWidth portrait'},
-            {id:'userAgent', label:'userAgent'},
+    constructor(controller) {
+        this.controller = controller;
+        this.tableHeaders= [
+            {id:'delete', label:'', width:'20px'},
+            {id:'make', label:'make', width:'100px'},
+            {id:'model', label:'model', width:'100px'},
+            {id:'pixelRatio', label:'pixel ratio', width:'60px'},
+            {id:'screenHeight', label:'screen height', width:'60px'},
+            {id:'screenWidth', label:'screen width', width:'60px'},
+            {id:'innerWidthLandscape', label:'Landscape width', width:'60px'},
+            {id:'innerHeightLandscape', label:'Landscape height', width:'60px'},
+            {id:'innerWidthPortrait', label:'portrait width', width:'60px'},
+            {id:'innerHeightPortrait', label:'portrait height', width:'60px'},
+            {id:'userAgent', label:'userAgent', width:'1000px'},
         ];
+
+        this.matcheValues = [
+            {id:'innerWidthLandscape', match:'screenHeight'},
+            {id:'innerHeightLandscape', match:'screenWidth'},
+            {id:'innerWidthPortrait', match:'screenWidth'},
+            {id:'innerHeightPortrait', match:'screenHeight'}
+        ]
     }
 
     show() {
-        const container = document.createElement('div');
-        container.id = 'container';
-        container.className = 'table-container';
-
         this.resultsTable = document.createElement('TABLE');
 
-        container.appendChild(this.resultsTable);
-        document.body.appendChild(container);
+        const container = document.getElementById('container');
 
-        this.addHeaders();
+        const tableContainer = document.createElement('div');
+        tableContainer.className = 'table-container';
+        tableContainer.appendChild(this.resultsTable);
+
+        const header = document.createElement('div');
+        header.className = 'header';
+        header.innerText = 'Device List';
+
+        const backButton = document.createElement('div');
+        backButton.innerText = "Back";
+        backButton.className = "back-button";
+        backButton.addEventListener('click', this.controller.showMenu.bind(this.controller));
+
+        container.appendChild(backButton);
+        container.appendChild(header);
+        container.appendChild(tableContainer);
+
+        this.addTableHeaders();
         this.requestResults();
+    }
+
+    addTableHeaders () {
+        const row = this.resultsTable.insertRow(-1);
+
+        for(let key of this.tableHeaders) {
+            const cell = row.insertCell(-1);
+            cell.innerHTML = key.label;
+            cell.className = "table-header";
+        }
     }
 
     requestResults() {
@@ -57,22 +87,14 @@ export default class DeviceList {
         }
     }
 
-    addHeaders () {
-        const row = this.resultsTable.insertRow(-1);
-
-        for(let key of this.headers) {
-            const cell = row.insertCell(-1);
-            cell.innerHTML = key.label;
-            cell.className = "table-header";
-        }
-    }
-
     addResult (data) {
         const row = this.resultsTable.insertRow(-1);
         const deleteCallback = this.deleteEntry.bind(this);
 
-        for(let key of this.headers) {
+        for(let key of this.tableHeaders) {
             const cell = row.insertCell(-1);
+            cell.style.width = key.width;
+
             if(key.id === 'delete') {
                 cell.innerHTML = "x";
                 cell.className = 'td-delete';
@@ -81,7 +103,23 @@ export default class DeviceList {
                 })
             } else {
                 const value = data[key.id];
-                cell.innerHTML = (value === undefined) ? "" : value;
+                var field = document.createElement("input");
+                field.className = 'cell-input';
+                cell.appendChild(field);
+
+                for(var match of this.matcheValues) {
+                    if(key.id === match.id) {
+                        const valueToMatch = data[match.match];
+
+                        if(value !== valueToMatch) {
+                            cell.className = 'td-warning';
+                        }
+                    }
+                }
+
+                field.value = (value === undefined) ? "" : value;
+                field.style.width = key.width;
+                // cell.style.width = key.width;
             }
         }
     }
