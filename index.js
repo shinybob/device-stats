@@ -30,46 +30,43 @@ app.get('/devices', function(sReq, sRes){
         const devices = [];
 
         for(var data of result) {
-            const device = {};
-            device.name = data.model;
-            device.manafacturer = data.make;
-            device.userAgent = data.userAgent;
-            device.sizes = {
-                screen: {
-                    width:data.screenWidth,
-                    height:data.screenHeight
-                },
-                window: {
-                    portrait: {
-                        width:data.innerWidthPortrait,
-                        height:data.innerHeightPortrait
+            if(data.active === true) {
+                const device = {
+                    make: data.make,
+                    model: data.model,
+                    screen: {
+                        width:data.screenWidth,
+                        height:data.screenHeight
                     },
-                    landscape: {
-                        width:data.innerWidthLandscape,
-                        height:data.innerHeightLandscape
+                    window: {
+                        portrait: {
+                            width:data.innerWidthPortrait,
+                            height:data.innerHeightPortrait
+                        },
+                        landscape: {
+                            width:data.innerWidthLandscape,
+                            height:data.innerHeightLandscape
+                        },
                     },
-                },
-                browserUI: {
-                    portrait:data.screenHeight - data.innerHeightPortrait,
-                    landscape:data.screenWidth - data.innerHeightLandscape
-                },
-                deviceFrame: {
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0
-                }
-            };
+                    browser: {
+                        name: data.browser,
+                        version: data.browserVersion,
+                        portraitSize:data.browserUIPortrait,
+                        landscapeSize:data.browserUILandscape,
+                        type: data.layout
+                    },
+                    os: {
+                        name: data.os,
+                        version: data.osVersion,
+                    },
+                    pixelRatio: data.pixelRatio,
+                    userAgent: data.userAgent,
 
-            device.viewport = {
-                deviceScaleFactor:data.pixelRatio,
-                isMobile:true,
-                hasTouch:true,
-                isLandscape:false,
-                isTablet:true,
-            };
 
-            devices.push(device);
+                };
+
+                devices.push(device);
+            }
         }
 
         sRes.send(devices);

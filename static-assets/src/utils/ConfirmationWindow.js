@@ -4,7 +4,7 @@ export default class ConfirmationWindow {
 
     }
 
-    show(confirmCallback, data) {
+    show(message, confirmCallback, data) {
         this.data = data;
         this.confirmCallback = confirmCallback;
 
@@ -14,7 +14,7 @@ export default class ConfirmationWindow {
 
         const header = document.createElement('div');
         header.className = 'header';
-        header.innerText = 'Are you sure?';
+        header.innerText = message;
 
         const yesButton = document.createElement('div');
         yesButton.innerText = "Yes";

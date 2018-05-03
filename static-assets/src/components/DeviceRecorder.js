@@ -14,21 +14,24 @@ export default class DeviceRecorder {
 
         this.stats = {
             make:platform.manufacturer,
-            model:'',
+            model:platform.product,
             innerWidthPortrait:0,
             innerHeightPortrait:0,
+            browserUIPortrait:0,
             innerWidthLandscape:0,
             innerHeightLandscape:0,
+            browserUILandscape:0,
             screenWidth:Math.min(screen.width, screen.height),
             screenHeight:Math.max(screen.width, screen.height),
             pixelRatio:window.devicePixelRatio,
             userAgent:navigator.userAgent,
-
+            active:false,
             browser: platform.name,
             browserVersion: platform.version,
             deviceType: platform.product,
             layout: platform.layout,
-            os: platform.os,
+            os: platform.os.family,
+            osVersion: platform.os.version,
             desc: platform.description
         };
 
@@ -75,14 +78,18 @@ export default class DeviceRecorder {
             this.stats.innerWidthLandscape > this.stats.innerHeightLandscape  &&
             this.stats.innerWidthPortrait < this.stats.innerHeightPortrait ) {
 
+            this.stats.browserUIPortrait = this.stats.screenHeight - this.stats.innerHeightPortrait;
+            this.stats.browserUILandscape = this.stats.screenWidth - this.stats.innerHeightLandscape;
+
             window.removeEventListener('resize', this.resizeCallback);
             this.showMake();
         } else {
-            this.messageScreen.show('Keep rotating, not enough data!.', this.onDeviceRotated.bind(this));
+            this.messageScreen.show('Not enough data!\n\nKeep rotating then try again.', this.onDeviceRotated.bind(this));
         }
     }
 
     showMake() {
+        console.log(platform.manufacturer)
         this.controller.emptyContainer();
         this.inputScreen.show('Make', this.showModel.bind(this), platform.manufacturer);
     }

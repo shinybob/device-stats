@@ -12,8 +12,8 @@ var MongoClient = require('mongodb').MongoClient,
  * mongod --dbpath /db
  ************************************************************/
 
-// var url = 'mongodb://localhost:27017/device-stats';
-var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
+var url = 'mongodb://localhost:27017/device-stats';
+// var url = 'mongodb://sys_admin:Password1@ds159509.mlab.com:59509/device-stats';
 var _db, devices;
 
 exports.init = function (callback) {
@@ -29,17 +29,27 @@ exports.init = function (callback) {
 };
 
 exports.update = function (cell_data, callback) {
+
     const data = {
             "active":cell_data.active,
             "make":cell_data.make,
             "model":cell_data.model,
-            "innerWidthPortrait":cell_data.innerWidthPortrait,
-            "innerHeightPortrait":cell_data.innerHeightPortrait,
-            "innerWidthLandscape":cell_data.innerWidthLandscape,
-            "innerHeightLandscape":cell_data.innerHeightLandscape,
+            "pixelRatio":cell_data.pixelRatio,
             "screenWidth":cell_data.screenWidth,
             "screenHeight":cell_data.screenHeight,
-            "pixelRatio":cell_data.pixelRatio,
+            "innerWidthLandscape":cell_data.innerWidthLandscape,
+            "innerHeightLandscape":cell_data.innerHeightLandscape,
+            "browserUILandscape":cell_data.browserUILandscape,
+            "innerWidthPortrait":cell_data.innerWidthPortrait,
+            "innerHeightPortrait":cell_data.innerHeightPortrait,
+            "browserUIPortrait":cell_data.browserUIPortrait,
+            "browser": cell_data.browser,
+            "browserVersion": cell_data.browserVersion,
+            "deviceType": cell_data.deviceType,
+            "layout": cell_data.layout,
+            "os": cell_data.os,
+            "osFamily": cell_data.osFamily,
+            "desc": cell_data.desc,
             "userAgent":cell_data.userAgent,
         };
 

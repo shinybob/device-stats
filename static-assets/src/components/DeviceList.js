@@ -3,27 +3,31 @@ const ConfirmationWindow = require('./../utils/ConfirmationWindow').default;
 export default class DeviceList {
 
     constructor(controller) {
+        this.sortType = 1;
         this.controller = controller;
         this.confirmationWindow = new ConfirmationWindow();
         this.tableHeaders= [
-            {id:'delete', label:'D', width:'20px'},
-            {id:'active', label:'active', width:'80px'},
-            {id:'make', label:'make', width:'100px'},
-            {id:'model', label:'model', width:'100px'},
-            {id:'pixelRatio', label:'pixel ratio', width:'60px'},
-            {id:'screenHeight', label:'screen height', width:'60px'},
-            {id:'screenWidth', label:'screen width', width:'60px'},
-            {id:'innerWidthLandscape', label:'Landscape width', width:'60px'},
-            {id:'innerHeightLandscape', label:'Landscape height', width:'60px'},
-            {id:'innerWidthPortrait', label:'portrait width', width:'60px'},
-            {id:'innerHeightPortrait', label:'portrait height', width:'60px'},
-            {id:'browser', label:'browser', width:'60px'},
-            {id:'browserVersion', label:'browser version', width:'60px'},
-            {id:'deviceType', label:'device type', width:'60px'},
-            {id:'layout', label:'layout', width:'60px'},
-            {id:'os', label:'os', width:'60px'},
-            {id:'desc', label:'desc', width:'1000px'},
-            {id:'userAgent', label:'userAgent', width:'1000px'},
+            {id:'delete', label:'', width:'20px', style:1},
+            {id:'active', label:'active', width:'80px', style:1},
+            {id:'make', label:'make', width:'100px', style:1},
+            {id:'model', label:'model', width:'100px', style:1},
+            {id:'pixelRatio', label:'pixel ratio', width:'60px', style:1},
+            {id:'screenWidth', label:'screen width', width:'60px', style:2},
+            {id:'screenHeight', label:'screen height', width:'60px', style:2},
+            {id:'innerWidthLandscape', label:'landscape width', width:'60px', style:1},
+            {id:'innerHeightLandscape', label:'landscape height', width:'60px', style:1},
+            {id:'browserUILandscape', label:'landscape browserUI', width:'60px', style:1},
+            {id:'innerWidthPortrait', label:'portrait width', width:'60px', style:2},
+            {id:'innerHeightPortrait', label:'portrait height', width:'60px', style:2},
+            {id:'browserUIPortrait', label:'portrait browserUI', width:'60px', style:2},
+            {id:'browser', label:'browser', width:'60px', style:1},
+            {id:'browserVersion', label:'browser version', width:'60px', style:1},
+            {id:'layout', label:'layout', width:'60px', style:1},
+            {id:'deviceType', label:'device type', width:'60px', style:2},
+            {id:'os', label:'os family', width:'60px', style:2},
+            {id:'osVersion', label:'os version', width:'60px', style:2},
+            {id:'desc', label:'desc', width:'150px', style:1},
+            {id:'userAgent', label:'userAgent', width:'1000px', style:1},
         ];
 
         this.matcheValues = [
@@ -71,9 +75,50 @@ export default class DeviceList {
         for(let key of this.tableHeaders) {
             const cell = row.insertCell(-1);
             cell.innerHTML = key.label;
-            cell.className = "table-header";
+            if(key.style === 1) {
+                cell.className = "table-header table-header-1";
+            } else {
+                cell.className = "table-header table-header-2";
+            }
+            cell.addEventListener("click", this.sort.bind(this, key));
         }
     }
+
+    sort(key) {
+        for(let i = this.resultsTable.rows.length - 1; i > 0; i--) {
+            this.resultsTable.deleteRow(i);
+        }
+
+        this.sortType = -this.sortType;
+        var st = this.sortType;
+
+        this.results.sort(
+                function(a, b){
+                    let vala = a[key];
+                    let valb = b[key];
+
+                    vala = (vala === undefined) ? "" : vala;
+                    valb = (valb === undefined) ? "" : valb;
+
+                    if (vala instanceof Object) {
+                        vala = JSON.stringify(vala);
+                    }
+                    if (valb instanceof Object) {
+                        valb = JSON.stringify(valb);
+                    }
+
+                    vala = vala.toString();
+                    valb = valb.toString();
+
+                    if(vala > valb) {
+                        return st;
+                    } else {
+                        return -st;
+                    }
+                });
+
+        this.updateResults(this.results);
+    };
 
     requestResults() {
         const callback = this.onResultsReceived.bind(this);
@@ -92,8 +137,11 @@ export default class DeviceList {
     }
 
     onResultsReceived (request) {
-        const results = JSON.parse(request.response);
+        this.results = JSON.parse(request.response);
+        this.updateResults(this.results);
+    }
 
+    updateResults (results) {
         for(let data of results) {
             this.addResult(data);
         }
@@ -169,7 +217,7 @@ export default class DeviceList {
 
     deleteEntryPrompt(cell_id, rowIndex) {
         const properties = {cell_id:cell_id, rowIndex:rowIndex};
-        this.confirmationWindow.show(this.deleteEntry.bind(this), properties);
+        this.confirmationWindow.show('Are you sure you want to delete this device?', this.deleteEntry.bind(this), properties);
     }
 
     deleteEntry(properties) {

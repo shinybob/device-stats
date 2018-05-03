@@ -8,7 +8,7 @@ export default class Menu {
         const container = document.getElementById('container');
 
         const header = document.createElement('div');
-        header.className = 'header';
+        header.className = 'header header-main';
         header.innerText = 'Monocle';
 
         const deviceRecorderButton = document.createElement('div');
@@ -21,8 +21,18 @@ export default class Menu {
         deviceListButton.className = "button";
         deviceListButton.addEventListener('click', this.controller.showDeviceList.bind(this.controller));
 
+        const endpointButton = document.createElement('div');
+        endpointButton.innerText = "Endpoint";
+        endpointButton.className = "button-link";
+        endpointButton.addEventListener('click', this.launchEndpoint.bind(this));
+
         container.appendChild(header);
         container.appendChild(deviceRecorderButton);
         container.appendChild(deviceListButton);
+        container.appendChild(endpointButton);
+    }
+
+    launchEndpoint() {
+        window.open(window.location + 'devices','_blank');
     }
 }

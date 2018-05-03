@@ -258,7 +258,7 @@ var Menu = function () {
             var container = document.getElementById('container');
 
             var header = document.createElement('div');
-            header.className = 'header';
+            header.className = 'header header-main';
             header.innerText = 'Monocle';
 
             var deviceRecorderButton = document.createElement('div');
@@ -271,9 +271,20 @@ var Menu = function () {
             deviceListButton.className = "button";
             deviceListButton.addEventListener('click', this.controller.showDeviceList.bind(this.controller));
 
+            var endpointButton = document.createElement('div');
+            endpointButton.innerText = "Endpoint";
+            endpointButton.className = "button-link";
+            endpointButton.addEventListener('click', this.launchEndpoint.bind(this));
+
             container.appendChild(header);
             container.appendChild(deviceRecorderButton);
             container.appendChild(deviceListButton);
+            container.appendChild(endpointButton);
+        }
+    }, {
+        key: 'launchEndpoint',
+        value: function launchEndpoint() {
+            window.open(window.location + 'devices', '_blank');
         }
     }]);
 
@@ -303,9 +314,10 @@ var DeviceList = function () {
     function DeviceList(controller) {
         _classCallCheck(this, DeviceList);
 
+        this.sortType = 1;
         this.controller = controller;
         this.confirmationWindow = new ConfirmationWindow();
-        this.tableHeaders = [{ id: 'delete', label: 'D', width: '20px' }, { id: 'active', label: 'active', width: '80px' }, { id: 'make', label: 'make', width: '100px' }, { id: 'model', label: 'model', width: '100px' }, { id: 'pixelRatio', label: 'pixel ratio', width: '60px' }, { id: 'screenHeight', label: 'screen height', width: '60px' }, { id: 'screenWidth', label: 'screen width', width: '60px' }, { id: 'innerWidthLandscape', label: 'Landscape width', width: '60px' }, { id: 'innerHeightLandscape', label: 'Landscape height', width: '60px' }, { id: 'innerWidthPortrait', label: 'portrait width', width: '60px' }, { id: 'innerHeightPortrait', label: 'portrait height', width: '60px' }, { id: 'browser', label: 'browser', width: '60px' }, { id: 'browserVersion', label: 'browser version', width: '60px' }, { id: 'deviceType', label: 'device type', width: '60px' }, { id: 'layout', label: 'layout', width: '60px' }, { id: 'os', label: 'os', width: '60px' }, { id: 'desc', label: 'desc', width: '1000px' }, { id: 'userAgent', label: 'userAgent', width: '1000px' }];
+        this.tableHeaders = [{ id: 'delete', label: '', width: '20px', style: 1 }, { id: 'active', label: 'active', width: '80px', style: 1 }, { id: 'make', label: 'make', width: '100px', style: 1 }, { id: 'model', label: 'model', width: '100px', style: 1 }, { id: 'pixelRatio', label: 'pixel ratio', width: '60px', style: 1 }, { id: 'screenWidth', label: 'screen width', width: '60px', style: 2 }, { id: 'screenHeight', label: 'screen height', width: '60px', style: 2 }, { id: 'innerWidthLandscape', label: 'landscape width', width: '60px', style: 1 }, { id: 'innerHeightLandscape', label: 'landscape height', width: '60px', style: 1 }, { id: 'browserUILandscape', label: 'landscape browserUI', width: '60px', style: 1 }, { id: 'innerWidthPortrait', label: 'portrait width', width: '60px', style: 2 }, { id: 'innerHeightPortrait', label: 'portrait height', width: '60px', style: 2 }, { id: 'browserUIPortrait', label: 'portrait browserUI', width: '60px', style: 2 }, { id: 'browser', label: 'browser', width: '60px', style: 1 }, { id: 'browserVersion', label: 'browser version', width: '60px', style: 1 }, { id: 'layout', label: 'layout', width: '60px', style: 1 }, { id: 'deviceType', label: 'device type', width: '60px', style: 2 }, { id: 'os', label: 'os family', width: '60px', style: 2 }, { id: 'osVersion', label: 'os version', width: '60px', style: 2 }, { id: 'desc', label: 'desc', width: '150px', style: 1 }, { id: 'userAgent', label: 'userAgent', width: '1000px', style: 1 }];
 
         this.matcheValues = [{ id: 'innerWidthLandscape', match: 'screenHeight' }, { id: 'innerHeightLandscape', match: 'screenWidth' }, { id: 'innerWidthPortrait', match: 'screenWidth' }, { id: 'innerHeightPortrait', match: 'screenHeight' }];
     }
@@ -357,7 +369,12 @@ var DeviceList = function () {
 
                     var cell = row.insertCell(-1);
                     cell.innerHTML = key.label;
-                    cell.className = "table-header";
+                    if (key.style === 1) {
+                        cell.className = "table-header table-header-1";
+                    } else {
+                        cell.className = "table-header table-header-2";
+                    }
+                    cell.addEventListener("click", this.sort.bind(this, key));
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -373,6 +390,42 @@ var DeviceList = function () {
                     }
                 }
             }
+        }
+    }, {
+        key: 'sort',
+        value: function sort(key) {
+            for (var i = this.resultsTable.rows.length - 1; i > 0; i--) {
+                this.resultsTable.deleteRow(i);
+            }
+
+            this.sortType = -this.sortType;
+            var st = this.sortType;
+
+            this.results.sort(function (a, b) {
+                var vala = a[key];
+                var valb = b[key];
+
+                vala = vala === undefined ? "" : vala;
+                valb = valb === undefined ? "" : valb;
+
+                if (vala instanceof Object) {
+                    vala = JSON.stringify(vala);
+                }
+                if (valb instanceof Object) {
+                    valb = JSON.stringify(valb);
+                }
+
+                vala = vala.toString();
+                valb = valb.toString();
+
+                if (vala > valb) {
+                    return st;
+                } else {
+                    return -st;
+                }
+            });
+
+            this.updateResults(this.results);
         }
     }, {
         key: 'requestResults',
@@ -394,8 +447,12 @@ var DeviceList = function () {
     }, {
         key: 'onResultsReceived',
         value: function onResultsReceived(request) {
-            var results = JSON.parse(request.response);
-
+            this.results = JSON.parse(request.response);
+            this.updateResults(this.results);
+        }
+    }, {
+        key: 'updateResults',
+        value: function updateResults(results) {
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
             var _iteratorError2 = undefined;
@@ -546,7 +603,7 @@ var DeviceList = function () {
         key: 'deleteEntryPrompt',
         value: function deleteEntryPrompt(cell_id, rowIndex) {
             var properties = { cell_id: cell_id, rowIndex: rowIndex };
-            this.confirmationWindow.show(this.deleteEntry.bind(this), properties);
+            this.confirmationWindow.show('Are you sure you want to delete this device?', this.deleteEntry.bind(this), properties);
         }
     }, {
         key: 'deleteEntry',
@@ -636,21 +693,24 @@ var DeviceRecorder = function () {
 
             this.stats = {
                 make: platform.manufacturer,
-                model: '',
+                model: platform.product,
                 innerWidthPortrait: 0,
                 innerHeightPortrait: 0,
+                browserUIPortrait: 0,
                 innerWidthLandscape: 0,
                 innerHeightLandscape: 0,
+                browserUILandscape: 0,
                 screenWidth: Math.min(screen.width, screen.height),
                 screenHeight: Math.max(screen.width, screen.height),
                 pixelRatio: window.devicePixelRatio,
                 userAgent: navigator.userAgent,
-
+                active: false,
                 browser: platform.name,
                 browserVersion: platform.version,
                 deviceType: platform.product,
                 layout: platform.layout,
-                os: platform.os,
+                os: platform.os.family,
+                osVersion: platform.os.version,
                 desc: platform.description
             };
 
@@ -697,15 +757,19 @@ var DeviceRecorder = function () {
         value: function checkStats() {
             if (this.stats.innerWidthLandscape > 0 && this.stats.innerHeightLandscape > 0 && this.stats.innerWidthPortrait > 0 && this.stats.innerHeightPortrait > 0 && this.stats.innerWidthLandscape > this.stats.innerHeightLandscape && this.stats.innerWidthPortrait < this.stats.innerHeightPortrait) {
 
+                this.stats.browserUIPortrait = this.stats.screenHeight - this.stats.innerHeightPortrait;
+                this.stats.browserUILandscape = this.stats.screenWidth - this.stats.innerHeightLandscape;
+
                 window.removeEventListener('resize', this.resizeCallback);
                 this.showMake();
             } else {
-                this.messageScreen.show('Keep rotating, not enough data!.', this.onDeviceRotated.bind(this));
+                this.messageScreen.show('Not enough data!\n\nKeep rotating then try again.', this.onDeviceRotated.bind(this));
             }
         }
     }, {
         key: 'showMake',
         value: function showMake() {
+            console.log(platform.manufacturer);
             this.controller.emptyContainer();
             this.inputScreen.show('Make', this.showModel.bind(this), platform.manufacturer);
         }
@@ -968,7 +1032,7 @@ var ConfirmationWindow = function () {
 
     _createClass(ConfirmationWindow, [{
         key: 'show',
-        value: function show(confirmCallback, data) {
+        value: function show(message, confirmCallback, data) {
             this.data = data;
             this.confirmCallback = confirmCallback;
 
@@ -977,7 +1041,7 @@ var ConfirmationWindow = function () {
 
             var header = document.createElement('div');
             header.className = 'header';
-            header.innerText = 'Are you sure?';
+            header.innerText = message;
 
             var yesButton = document.createElement('div');
             yesButton.innerText = "Yes";
