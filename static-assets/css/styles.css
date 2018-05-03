@@ -19,12 +19,17 @@ table {
      padding: 2px;
 }
 
+tr {
+    height: 30px;
+}
+
 td {
     padding: 4px;
     overflow-x:auto;
     word-wrap: normal;
     white-space:nowrap;
     user-select: none;
+    font-size: 16px;
 }
 
 .cell-input {
@@ -36,15 +41,16 @@ td {
     text-align: center;
     white-space: normal;
     background-color: #0e6f5e;
-    color: white;
 }
 
 .table-header-1 {
     background-color: #0e6f5e;
+    color: #b2e1d8;
 }
 
 .table-header-2 {
-    background-color: #ff8b2f;
+    background-color: #0a5145;
+    color: #a1cec5;
 }
 
 .table-header-1:hover {
@@ -64,7 +70,7 @@ td {
 }
 
 .td-warning {
-    background-color: #faa7a2;
+    background-color: #ffdddd;
 }
 
 .td-active-true {

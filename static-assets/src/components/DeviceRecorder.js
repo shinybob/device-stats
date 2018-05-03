@@ -47,7 +47,7 @@ export default class DeviceRecorder {
     enterFullScreen() {
         this.container.removeEventListener('click', this.fullScreenCallback);
         window.addEventListener('resize', this.resizeCallback);
-        // FullScreenUtil.enterFullScreen();
+        FullScreenUtil.enterFullScreen();
         this.messageScreen.show('Rotate the device!\n\nEnsure the window has reached fullscreen in both orientations (where possible).\n\nWhen you are sure, click next.', this.onDeviceRotated.bind(this));
     }
 
