@@ -138,6 +138,7 @@ tr:nth-child(odd) {background: #EEEEEE}
     box-sizing: border-box;
     background-color: black;
     overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .back-button {
