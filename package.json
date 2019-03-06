@@ -2,17 +2,13 @@
   "name": "device-stats",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git@github.com:shinybob/device-stats.git",
+    "url": "git@github.com:shinybob/device-stats.git"
   },
   "author": "studiocore@gamesys.co.uk",
   "license": "ISC",
-  "devDependencies": {
-
-  },
-  "dependencies": {
-  }
+  "devDependencies": {},
+  "dependencies": {}
 }
