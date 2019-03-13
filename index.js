@@ -1,12 +1,41 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
+import Database from './Database';
 
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + "/static-assets"));
+let app = express();
+
+app.use(express.static(__dirname + '/static-assets'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.listen(app.get('port'), () => {
-    console.log("Web sever started @ http://localhost:" + app.get('port'));
+app.enable('trust proxy');
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
 });
+
+const PORT = 5000;
+
+let database = new Database();
+
+database
+    .init()
+    .then(() => {
+        console.info('DB initialised...\nStarting Server...');
+        let httpsServer = https.createServer(credentials, app);
+        httpsServer.listen(PORT, (error) => {
+            return new Promise((resolve, reject) => {
+                if (error) {
+                    reject(error);
+                }
+                console.info('Server started on port:' + PORT);
+                resolve();
+            });
+        });
+    })
+    .catch(error => {
+        console.error('Error initialising DB, aborting: ' + JSON.stringify(error, 0, 2));
+        exit(-1);
+    });

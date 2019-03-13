@@ -1,14 +1,36 @@
 {
   "name": "device-stats",
   "version": "1.0.0",
-  "description": "",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:shinybob/device-stats.git"
+  "description": "Reports device data",
+  "engines": {
+      "node": "9.2.0"
   },
-  "author": "studiocore@gamesys.co.uk",
-  "license": "ISC",
-  "devDependencies": {},
-  "dependencies": {}
+  "main": "index.js",
+  "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node index.js"
+  },
+  "author": "rob.thurston",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/shinybob/device-stats"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "copy-webpack-plugin": "^5.0.0",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
+    "platform": "^1.3.5",
+    "mobile-detect": "^1.4.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/node": "^7.2.2",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-loader": "^8.0.5",
+    "webpack": "4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
 }
