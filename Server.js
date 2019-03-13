@@ -25,8 +25,8 @@ module.exports = class Server {
     }
 
     startServer(onSuccess) {
-        this.app.listen(app.get('port'), () => {
-            onSuccess(app.get('port'));
+        this.app.listen(this.app.get('port'), () => {
+            onSuccess(this.app.get('port'));
         });
     }
 };
