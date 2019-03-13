@@ -10,7 +10,7 @@ module.exports = class Server {
         this.port = 5000;
 
         // this.app.use(morgan('dev'));
-        this.app.use(express.static('static-assets'));
+        this.app.use(express.static(__dirname + '/static-assets'));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
 
