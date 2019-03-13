@@ -8,7 +8,7 @@ module.exports = class Server {
         this.main = main;
         this.app = express();
 
-        app.set('port', (process.env.PORT || 5000));
+        this.app.set('port', (process.env.PORT || 5000));
 
         // this.app.use(morgan('dev'));
         this.app.use(express.static(__dirname + '/static-assets'));
