@@ -7,7 +7,8 @@ module.exports = class Server {
     constructor(main) {
         this.main = main;
         this.app = express();
-        this.port = 5000;
+
+        app.set('port', (process.env.PORT || 5000));
 
         // this.app.use(morgan('dev'));
         this.app.use(express.static(__dirname + '/static-assets'));
@@ -24,8 +25,8 @@ module.exports = class Server {
     }
 
     startServer(onSuccess) {
-        this.app.listen(this.port, () => {
-            onSuccess(this.port);
+        this.app.listen(app.get('port'), () => {
+            onSuccess(app.get('port'));
         });
     }
 };
