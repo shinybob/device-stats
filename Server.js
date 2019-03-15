@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 module.exports = class Server {
 
@@ -10,7 +9,6 @@ module.exports = class Server {
 
         this.app.set('port', (process.env.PORT || 5000));
 
-        // this.app.use(morgan('dev'));
         this.app.use(express.static(__dirname + '/static-assets'));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
@@ -19,14 +17,16 @@ module.exports = class Server {
     }
 
     setupMessaging() {
-        // this.app.get('/report', this.report.bind(this));
-        // this.app.get('/update', this.update.bind(this));
-        // this.app.post('/capture', this.capture.bind(this));
+        this.app.post('/addDevice', this.addDevice.bind(this));
     }
 
     startServer(onSuccess) {
         this.app.listen(this.app.get('port'), () => {
             onSuccess(this.app.get('port'));
         });
+    }
+
+    addDevice(req, res) {
+        this.main(req.body);
     }
 };

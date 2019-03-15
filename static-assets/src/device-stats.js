@@ -1,13 +1,41 @@
-var canvas, context, renderer, container;
+var canvas, context, renderer;
 
 window.onload = init;
 
 function init() {
-    container = document.createElement('div');
-    container.className = 'screen-guide-container';
+
+    this.container = document.createElement('div');
+
+    this.resultField = document.createElement('div');
+    this.deviceInput = document.createElement('input');
+    this.additionalDataInput = document.createElement('input');
+    this.submitButton = document.createElement('button');
+    this.submitButton.name = 'Send!';
+    this.submitButton.innerText = 'Send!';
+
+    this.container.className = 'container';
+    this.resultField.className = 'field';
+    this.deviceInput.className = 'input';
+    this.additionalDataInput.className = 'input';
+    this.submitButton.className = 'button';
+
+    this.deviceInput.placeholder = 'Device Name';
+    this.additionalDataInput.placeholder = 'Additional Data';
+
+    this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
+
+    this.deviceInput.id = 'deviceName';
+    this.additionalDataInput.id = 'additionalData';
+    this.submitButton.id = 'submitButton';
+
+    container.appendChild(resultField);
+    container.appendChild(deviceInput);
+    container.appendChild(additionalDataInput);
+    container.appendChild(submitButton);
 
     window.addEventListener('resize', update);
-    document.body.appendChild(container);
+
+    document.body.appendChild(this.container);
 
     canvas = document.createElement('canvas');
 
@@ -24,6 +52,38 @@ function init() {
     update();
 }
 
+function onSubmitClicked() {
+    let deviceData = {
+        deviceName:this.deviceInput.value,
+        additionalData:this.additionalDataInput.value,
+        height:(screen.width >= screen.height) ? screen.width : screen.height,
+        width:(screen.width < screen.height) ? screen.width : screen.height,
+        renderer:getRenderer(),
+        maxAnisotropy:getMaxAnisotropy(),
+        devicePixelRatio:window.devicePixelRatio,
+    }
+
+    let callback = this.onSubmitionComplete.bind(this);
+    let request = new XMLHttpRequest();
+
+    request.open('POST', '/addDevice', true);
+    request.setRequestHeader('Content-type', 'application/json');
+    request.onreadystatechange = () => {
+        if (request.readyState === 4 && request.status === 200) {
+            callback(request);
+        }
+    };
+
+    request.send(JSON.stringify(deviceData));
+
+    console.log('onSubmitClicked');
+    console.log(deviceData);
+}
+
+function onSubmitionComplete(request) {
+    console.log(request);
+}
+
 function update() {
     var text = '';
 
@@ -33,7 +93,7 @@ function update() {
     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
 
-    container.innerText = text;
+    this.resultField.innerText = text;
 }
 
 function getRenderer() {
