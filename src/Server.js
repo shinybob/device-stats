@@ -9,7 +9,9 @@ module.exports = class Server {
 
         this.app.set('port', (process.env.PORT || 5000));
 
-        this.app.use(express.static(__dirname + '/static-assets'));
+        console.log("__dirname")
+        console.log(__dirname)
+        this.app.use(express.static('./static-assets'));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
 
