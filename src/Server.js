@@ -18,6 +18,7 @@ module.exports = class Server {
 
     setupMessaging() {
         this.app.post('/addDevice', this.addDevice.bind(this));
+        this.app.get('/getDeviceList', this.getDeviceList.bind(this));
     }
 
     startServer(onSuccess) {
@@ -27,6 +28,11 @@ module.exports = class Server {
     }
 
     addDevice(req, res) {
-        this.main(req.body);
+        this.main.addDevice(req.body);
+    }
+
+    async getDeviceList(req, res) {
+        var deviceList = await this.main.getDeviceList();
+        res.send(deviceList);
     }
 };
