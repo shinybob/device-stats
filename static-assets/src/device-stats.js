@@ -83,6 +83,8 @@ function onSubmitClicked() {
 
     console.log('onSubmitClicked');
     console.log(deviceData);
+
+    this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
 }
 
 function onSubmitionComplete(request) {
