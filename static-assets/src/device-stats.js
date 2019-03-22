@@ -1,8 +1,8 @@
 var canvas, context, renderer;
 
 function log(message) {
-    var field = document.getElementById('log')
-    field.innerText = message + '\n' + field.innerText;
+    var field = document.getElementById("log")
+    field.innerText = message + "\n" + field.innerText;
 }
 
 setTimeout(this.init, 1000);
@@ -10,7 +10,8 @@ setTimeout(this.init, 1000);
 // window.onload = init;
 
 function init() {
-    this.log('init 1');
+    var field = document.getElementById("log")
+    field.innerText = "arghhhh";
 
     this.container = document.createElement('div');
 
