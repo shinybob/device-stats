@@ -4,10 +4,13 @@
 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/styles.css">
+    <script type='text/javascript' src="src/device-stats.js"></script>
     <title>device-stats</title>
 
 </head>
-<body onload="init()">
+<body>
+        <div class="log" id="log">logs 3</div>
+<!-- <body onload="init()">
 
     <div class="log" id="log">logs 2</div>
 
@@ -74,11 +77,8 @@
             } catch(e) {
                 logMessage('cant create canvas');
             }
-            logMessage('Woot 3!!!!');
-        
-            // this.log('init 3');
-        
-            // update();
+
+            update();
         }
         
         // function onSubmitClicked() {
@@ -115,44 +115,44 @@
         //     console.log(request);
         // }
         
-        // function update() {
-        //     this.log('update 1');
-        //     var text = '';
+        function update() {
+            this.log('update 1');
+            var text = '';
         
-        //     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
-        //     text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
-        //     text += 'Renderer: ' + getRenderer() + '\n';
-        //     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
-        //     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
-        //     text += 'userAgent: ' + window.navigator.userAgent + '\n';
+            text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
+            text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
+            text += 'Renderer: ' + getRenderer() + '\n';
+            text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
+            text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
+            text += 'userAgent: ' + window.navigator.userAgent + '\n';
         
-        //     this.resultField.innerText = text;
+            this.resultField.innerText = text;
         
-        //     this.log('update 2');
-        // }
+            this.log('update 2');
+        }
         
-        // function getRenderer() {
-        //     return renderer || 'unknown';
-        // }
+        function getRenderer() {
+            return renderer || 'unknown';
+        }
         
-        // function getMaxAnisotropy() {
-        //     let max = 0;
+        function getMaxAnisotropy() {
+            let max = 0;
         
-        //     if (context) {
-        //         let extension = (
-        //             context.getExtension('EXT_texture_filter_anisotropic') ||
-        //             context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
-        //             context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
-        //         );
+            if (context) {
+                let extension = (
+                    context.getExtension('EXT_texture_filter_anisotropic') ||
+                    context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
+                    context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
+                );
         
-        //         if (extension) {
-        //             max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-        //         }
-        //     }
+                if (extension) {
+                    max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+                }
+            }
         
-        //     return max;
-        // }
-    </script>
+            return max;
+        }
+    </script> -->
 
 </body>
 </html>

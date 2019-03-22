@@ -1,18 +1,8 @@
 var canvas, context, renderer;
 
-function log(message) {
-    var field = document.getElementById("log")
-    field.innerText = message + "\n" + field.innerText;
-}
-
-setTimeout(this.init, 1000);
-
-// window.onload = init;
+window.onload = init;
 
 function init() {
-    var field = document.getElementById("log")
-    field.innerText = "arghhhh";
-
     this.container = document.createElement('div');
 
     this.header = document.createElement('div');
@@ -41,7 +31,7 @@ function init() {
 
     header.innerText = "Device Stats";
 
-    this.log('init 2');
+    this.logMessage('init 2');
 
     container.appendChild(header);
     container.appendChild(deviceInput);
@@ -58,20 +48,20 @@ function init() {
     if (canvas) {
         context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
         if (context) {
-            let info = context.getExtension('WEBGL_debug_renderer_info');
+            var info = context.getExtension('WEBGL_debug_renderer_info');
             if (info) {
                 renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
             }
         }
     }
 
-    this.log('init 3');
+    this.logMessage('init 3');
 
     update();
 }
 
 function onSubmitClicked() {
-    let deviceData = {
+    var deviceData = {
         deviceName:this.deviceInput.value,
         additionalData:this.additionalDataInput.value,
         height:(screen.width >= screen.height) ? screen.width : screen.height,
@@ -81,8 +71,8 @@ function onSubmitClicked() {
         devicePixelRatio:window.devicePixelRatio,
     }
 
-    let callback = this.onSubmitionComplete.bind(this);
-    let request = new XMLHttpRequest();
+    var callback = this.onSubmitionComplete.bind(this);
+    var request = new XMLHttpRequest();
 
     request.open('POST', '/addDevice', true);
     request.setRequestHeader('Content-type', 'application/json');
@@ -100,12 +90,17 @@ function onSubmitClicked() {
     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
 }
 
+function logMessage(message) {
+    var field = document.getElementById("log")
+    field.innerText = message + "\n" + field.innerText;
+}
+
 function onSubmitionComplete(request) {
     console.log(request);
 }
 
 function update() {
-    this.log('update 1');
+    this.logMessage('update 1');
     var text = '';
 
     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
@@ -117,7 +112,7 @@ function update() {
 
     this.resultField.innerText = text;
 
-    this.log('update 2');
+    this.logMessage('update 2');
 }
 
 function getRenderer() {
@@ -125,10 +120,10 @@ function getRenderer() {
 }
 
 function getMaxAnisotropy() {
-    let max = 0;
+    var max = 0;
 
     if (context) {
-        let extension = (
+        var extension = (
             context.getExtension('EXT_texture_filter_anisotropic') ||
             context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
             context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
