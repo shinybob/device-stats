@@ -13,7 +13,7 @@
 
     <script>
 
-        var canvas, context, renderer;
+        var context, renderer;
 
         function logMessage(message) {
             var field = document.getElementById("log")
@@ -65,19 +65,19 @@
             document.body.appendChild(this.container);
         
             try {
-                canvas = document.createElement('canvas');
-            } catch(e) {
-                logMessage('cant create canvas');
-            }
-        
-            if (canvas) {
-                context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                if (context) {
-                    let info = context.getExtension('WEBGL_debug_renderer_info');
-                    if (info) {
-                        renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+                var canvas = document.createElement('canvas');
+
+                if (canvas) {
+                    context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (context) {
+                        let info = context.getExtension('WEBGL_debug_renderer_info');
+                        if (info) {
+                            renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+                        }
                     }
                 }
+            } catch(e) {
+                logMessage('cant create canvas');
             }
             logMessage('Woot 3!!!!');
         
