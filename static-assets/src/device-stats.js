@@ -3,8 +3,6 @@ var canvas, context, renderer;
 window.onload = init;
 
 function init() {
-    this.md = new MobileDetect(window.navigator.userAgent);
-
     this.container = document.createElement('div');
 
     this.header = document.createElement('div');
@@ -12,6 +10,7 @@ function init() {
     this.deviceInput = document.createElement('input');
     this.additionalDataInput = document.createElement('input');
     this.submitButton = document.createElement('button');
+    
     this.submitButton.name = 'Send!';
     this.submitButton.innerText = 'Send!';
 
@@ -99,14 +98,6 @@ function update() {
     text += 'Renderer: ' + getRenderer() + '\n';
     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
-    // text += 'MobileDetect.mobile: ' + md.mobile() + '\n';
-    // text += 'MobileDetect.phone: ' + md.phone() + '\n';
-    // text += 'MobileDetect.webkit: ' + md.version('Webkit') + '\n';
-    // text += 'MobileDetect.build: ' + md.versionStr('Build') + '\n';
-    // text += 'Modernizr.batteryapi: ' + Modernizr.batteryapi + '\n';
-    // text += 'Modernizr.ambientlight: ' + Modernizr.ambientlight + '\n';
-    // text += 'Modernizr.fullscreen: ' + Modernizr.fullscreen + '\n';
-
     text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
     this.resultField.innerText = text;
