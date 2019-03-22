@@ -105,8 +105,8 @@ function update() {
 
     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
     text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
-    // text += 'Renderer: ' + getRenderer() + '\n';
-    // text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
+    text += 'Renderer: ' + getRenderer() + '\n';
+    text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
     text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
@@ -115,24 +115,24 @@ function update() {
     this.logMessage('update 2');
 }
 
-// function getRenderer() {
-//     return renderer || 'unknown';
-// }
+function getRenderer() {
+    return renderer || 'unknown';
+}
 
-// function getMaxAnisotropy() {
-//     var max = 0;
+function getMaxAnisotropy() {
+    var max = 0;
 
-//     if (context) {
-//         var extension = (
-//             context.getExtension('EXT_texture_filter_anisotropic') ||
-//             context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
-//             context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
-//         );
+    if (context) {
+        var extension = (
+            context.getExtension('EXT_texture_filter_anisotropic') ||
+            context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
+            context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
+        );
 
-//         if (extension) {
-//             max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-//         }
-//     }
+        if (extension) {
+            max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+        }
+    }
 
-//     return max;
-// }
+    return max;
+}
