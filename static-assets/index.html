@@ -13,12 +13,12 @@
 
     <script>
 
-        function logMessage() {
+        function logMessage(message) {
             var field = document.getElementById("log")
-            field.innerText = "arghhhh 1";
+            field.innerText = message + "\n" + field.innerText;
         }
 
-        logMessage();
+        logMessage("hello world!");
         // var canvas, context, renderer;
 
         // function log(message) {
