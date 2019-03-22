@@ -57,7 +57,7 @@ function init() {
 
     this.logMessage('init 3');
 
-    // update();
+    update();
 }
 
 // function onSubmitClicked() {
@@ -99,21 +99,21 @@ function logMessage(message) {
 //     console.log(request);
 // }
 
-// function update() {
-//     this.logMessage('update 1');
-//     var text = '';
+function update() {
+    this.logMessage('update 1');
+    var text = '';
 
-//     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
-//     text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
-//     text += 'Renderer: ' + getRenderer() + '\n';
-//     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
-//     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
-//     text += 'userAgent: ' + window.navigator.userAgent + '\n';
+    text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
+    text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
+    // text += 'Renderer: ' + getRenderer() + '\n';
+    // text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
+    text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
+    text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
-//     this.resultField.innerText = text;
+    this.resultField.innerText = text;
 
-//     this.logMessage('update 2');
-// }
+    this.logMessage('update 2');
+}
 
 // function getRenderer() {
 //     return renderer || 'unknown';
