@@ -72,24 +72,23 @@ function onSubmitClicked() {
         devicePixelRatio:window.devicePixelRatio,
     }
 
-    var callback = this.onSubmitionComplete.bind(this);
-    var request = new XMLHttpRequest();
+//     var callback = this.onSubmitionComplete.bind(this);
+//     var request = new XMLHttpRequest();
 
-    request.open('POST', '/addDevice', true);
-    request.setRequestHeader('Content-type', 'application/json');
-    request.onreadystatechange = () => {
-        if (request.readyState === 4 && request.status === 200) {
-            callback(request);
-        }
-    };
+//     request.open('POST', '/addDevice', true);
+//     request.setRequestHeader('Content-type', 'application/json');
+//     request.onreadystatechange = () => {
+//         if (request.readyState === 4 && request.status === 200) {
+//             callback(request);
+//         }
+//     };
 
-    request.send(JSON.stringify(deviceData));
+//     request.send(JSON.stringify(deviceData));
 
-    this.logMessage('onSubmitClicked 2');
-    console.log('onSubmitClicked');
-    console.log(deviceData);
+//     console.log('onSubmitClicked');
+//     console.log(deviceData);
 
-    this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
+//     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
 }
 
 function logMessage(message) {
@@ -97,9 +96,9 @@ function logMessage(message) {
     field.innerText = message + "\n" + field.innerText;
 }
 
-function onSubmitionComplete(request) {
-    console.log(request);
-}
+// function onSubmitionComplete(request) {
+//     console.log(request);
+// }
 
 function update() {
     this.logMessage('update 1');
