@@ -6,6 +6,8 @@ function log(message) {
     field.innerText = message + '\n' + field.innerText;
 }
 
+setTimeout(this.init, 1000);
+
 // window.onload = init;
 
 function init() {
