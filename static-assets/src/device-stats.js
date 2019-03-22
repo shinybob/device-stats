@@ -1,12 +1,16 @@
 var canvas, context, renderer;
 
-console.log("main");
+
+function log(message) {
+    let field = document.getElementById('log')
+    field.innerText = message + '\n' + field.innerText;
+}
 
 window.onload = init;
 
 function init() {
-    console.log("init");
-    
+    this.log('init 1');
+
     this.container = document.createElement('div');
 
     this.header = document.createElement('div');
@@ -35,6 +39,8 @@ function init() {
 
     header.innerText = "Device Stats";
 
+    this.log('init 2');
+
     container.appendChild(header);
     container.appendChild(deviceInput);
     container.appendChild(additionalDataInput);
@@ -56,6 +62,8 @@ function init() {
             }
         }
     }
+
+    this.log('init 3');
 
     update();
 }
@@ -95,6 +103,7 @@ function onSubmitionComplete(request) {
 }
 
 function update() {
+    this.log('update 1');
     var text = '';
 
     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
@@ -105,6 +114,8 @@ function update() {
     text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
     this.resultField.innerText = text;
+
+    this.log('update 2');
 }
 
 function getRenderer() {

@@ -10,6 +10,17 @@ body {
     color: white;
 }
 
+.log {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:60px;   /* Height of the footer */
+    background:black;
+    color: greenyellow;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
 a:link {
     color: white;
 }
