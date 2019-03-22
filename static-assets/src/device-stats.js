@@ -31,8 +31,6 @@ function init() {
 
     header.innerText = "Device Stats";
 
-    this.logMessage('init 2');
-
     container.appendChild(header);
     container.appendChild(deviceInput);
     container.appendChild(additionalDataInput);
@@ -55,13 +53,15 @@ function init() {
         }
     }
 
-    this.logMessage('init 3');
-
     update();
 }
 
 function onSubmitClicked() {
-    this.logMessage('onSubmitClicked 2');
+    if(deviceInput.value.length < 2) {
+        this.deviceInput.className = 'input error';
+        return;    
+    }
+
     var deviceData = {
         deviceName:this.deviceInput.value,
         additionalData:this.additionalDataInput.value,
@@ -91,17 +91,11 @@ function onSubmitClicked() {
     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
 }
 
-function logMessage(message) {
-    var field = document.getElementById("log")
-    field.innerText = message + "\n" + field.innerText;
-}
-
 function onSubmitionComplete(request) {
     console.log(request);
 }
 
 function update() {
-    this.logMessage('update 1');
     var text = '';
 
     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
@@ -112,8 +106,6 @@ function update() {
     text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
     this.resultField.innerText = text;
-
-    this.logMessage('update 2');
 }
 
 function getRenderer() {
