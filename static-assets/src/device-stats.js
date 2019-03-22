@@ -23,7 +23,7 @@ function init() {
     this.deviceInput.placeholder = 'Device Name';
     this.additionalDataInput.placeholder = 'Additional Data';
 
-    // this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
+    this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
 
     this.deviceInput.id = 'deviceName';
     this.additionalDataInput.id = 'additionalData';
@@ -39,7 +39,7 @@ function init() {
     container.appendChild(submitButton);
     container.appendChild(resultField);
 
-    // window.addEventListener('resize', update);
+    window.addEventListener('resize', update);
 
     document.body.appendChild(this.container);
 
@@ -60,7 +60,8 @@ function init() {
     update();
 }
 
-// function onSubmitClicked() {
+function onSubmitClicked() {
+    this.logMessage('onSubmitClicked 1');
 //     var deviceData = {
 //         deviceName:this.deviceInput.value,
 //         additionalData:this.additionalDataInput.value,
@@ -88,7 +89,7 @@ function init() {
 //     console.log(deviceData);
 
 //     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
-// }
+}
 
 function logMessage(message) {
     var field = document.getElementById("log")
