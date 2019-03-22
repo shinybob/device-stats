@@ -64,17 +64,18 @@
         
             document.body.appendChild(this.container);
         
-            // canvas = document.createElement('canvas');
+            canvas = document.createElement('canvas');
         
-            // if (canvas) {
-            //     context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-            //     if (context) {
-            //         let info = context.getExtension('WEBGL_debug_renderer_info');
-            //         if (info) {
-            //             renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
-            //         }
-            //     }
-            // }
+            if (canvas) {
+                context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (context) {
+                    let info = context.getExtension('WEBGL_debug_renderer_info');
+                    if (info) {
+                        renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+                    }
+                }
+            }
+            logMessage('Woot 3!!!!');
         
             // this.log('init 3');
         
