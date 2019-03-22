@@ -9,152 +9,154 @@
 </head>
 <body>
 
-    <div class="log" id="log">logs</div>
+    <div class="log" id="log">logs 2</div>
 
     <script>
-        var canvas, context, renderer;
-
-        function log(message) {
-            var field = document.getElementById("log")
-            field.innerText = message + "\n" + field.innerText;
-        }
-        
-        setTimeout(init, 1000);
-        
-        // window.onload = init;
-        
-        function init() {
             var field = document.getElementById("log")
             field.innerText = "arghhhh";
+        // var canvas, context, renderer;
+
+        // function log(message) {
+        //     var field = document.getElementById("log")
+        //     field.innerText = message + "\n" + field.innerText;
+        // }
         
-            this.container = document.createElement('div');
+        // setTimeout(init, 1000);
         
-            this.header = document.createElement('div');
-            this.resultField = document.createElement('div');
-            this.deviceInput = document.createElement('input');
-            this.additionalDataInput = document.createElement('input');
-            this.submitButton = document.createElement('button');
+        // // window.onload = init;
         
-            this.submitButton.name = 'Send!';
-            this.submitButton.innerText = 'Send!';
+        // function init() {
+        //     var field = document.getElementById("log")
+        //     field.innerText = "arghhhh";
         
-            this.container.className = 'container';
-            this.header.className = 'header';
-            this.resultField.className = 'results';
-            this.deviceInput.className = 'input';
-            this.additionalDataInput.className = 'input';
-            this.submitButton.className = 'button';
-            this.deviceInput.placeholder = 'Device Name';
-            this.additionalDataInput.placeholder = 'Additional Data';
+        //     this.container = document.createElement('div');
         
-            this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
+        //     this.header = document.createElement('div');
+        //     this.resultField = document.createElement('div');
+        //     this.deviceInput = document.createElement('input');
+        //     this.additionalDataInput = document.createElement('input');
+        //     this.submitButton = document.createElement('button');
         
-            this.deviceInput.id = 'deviceName';
-            this.additionalDataInput.id = 'additionalData';
-            this.submitButton.id = 'submitButton';
+        //     this.submitButton.name = 'Send!';
+        //     this.submitButton.innerText = 'Send!';
         
-            header.innerText = "Device Stats";
+        //     this.container.className = 'container';
+        //     this.header.className = 'header';
+        //     this.resultField.className = 'results';
+        //     this.deviceInput.className = 'input';
+        //     this.additionalDataInput.className = 'input';
+        //     this.submitButton.className = 'button';
+        //     this.deviceInput.placeholder = 'Device Name';
+        //     this.additionalDataInput.placeholder = 'Additional Data';
         
-            this.log('init 2');
+        //     this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
         
-            container.appendChild(header);
-            container.appendChild(deviceInput);
-            container.appendChild(additionalDataInput);
-            container.appendChild(submitButton);
-            container.appendChild(resultField);
+        //     this.deviceInput.id = 'deviceName';
+        //     this.additionalDataInput.id = 'additionalData';
+        //     this.submitButton.id = 'submitButton';
         
-            window.addEventListener('resize', update);
+        //     header.innerText = "Device Stats";
         
-            document.body.appendChild(this.container);
+        //     this.log('init 2');
         
-            canvas = document.createElement('canvas');
+        //     container.appendChild(header);
+        //     container.appendChild(deviceInput);
+        //     container.appendChild(additionalDataInput);
+        //     container.appendChild(submitButton);
+        //     container.appendChild(resultField);
         
-            if (canvas) {
-                context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                if (context) {
-                    let info = context.getExtension('WEBGL_debug_renderer_info');
-                    if (info) {
-                        renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
-                    }
-                }
-            }
+        //     window.addEventListener('resize', update);
         
-            this.log('init 3');
+        //     document.body.appendChild(this.container);
         
-            update();
-        }
+        //     canvas = document.createElement('canvas');
         
-        function onSubmitClicked() {
-            let deviceData = {
-                deviceName:this.deviceInput.value,
-                additionalData:this.additionalDataInput.value,
-                height:(screen.width >= screen.height) ? screen.width : screen.height,
-                width:(screen.width < screen.height) ? screen.width : screen.height,
-                renderer:getRenderer(),
-                maxAnisotropy:getMaxAnisotropy(),
-                devicePixelRatio:window.devicePixelRatio,
-            }
+        //     if (canvas) {
+        //         context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        //         if (context) {
+        //             let info = context.getExtension('WEBGL_debug_renderer_info');
+        //             if (info) {
+        //                 renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+        //             }
+        //         }
+        //     }
         
-            let callback = this.onSubmitionComplete.bind(this);
-            let request = new XMLHttpRequest();
+        //     this.log('init 3');
         
-            request.open('POST', '/addDevice', true);
-            request.setRequestHeader('Content-type', 'application/json');
-            request.onreadystatechange = () => {
-                if (request.readyState === 4 && request.status === 200) {
-                    callback(request);
-                }
-            };
+        //     update();
+        // }
         
-            request.send(JSON.stringify(deviceData));
+        // function onSubmitClicked() {
+        //     let deviceData = {
+        //         deviceName:this.deviceInput.value,
+        //         additionalData:this.additionalDataInput.value,
+        //         height:(screen.width >= screen.height) ? screen.width : screen.height,
+        //         width:(screen.width < screen.height) ? screen.width : screen.height,
+        //         renderer:getRenderer(),
+        //         maxAnisotropy:getMaxAnisotropy(),
+        //         devicePixelRatio:window.devicePixelRatio,
+        //     }
         
-            console.log('onSubmitClicked');
-            console.log(deviceData);
+        //     let callback = this.onSubmitionComplete.bind(this);
+        //     let request = new XMLHttpRequest();
         
-            this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
-        }
+        //     request.open('POST', '/addDevice', true);
+        //     request.setRequestHeader('Content-type', 'application/json');
+        //     request.onreadystatechange = () => {
+        //         if (request.readyState === 4 && request.status === 200) {
+        //             callback(request);
+        //         }
+        //     };
         
-        function onSubmitionComplete(request) {
-            console.log(request);
-        }
+        //     request.send(JSON.stringify(deviceData));
         
-        function update() {
-            this.log('update 1');
-            var text = '';
+        //     console.log('onSubmitClicked');
+        //     console.log(deviceData);
         
-            text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
-            text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
-            text += 'Renderer: ' + getRenderer() + '\n';
-            text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
-            text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
-            text += 'userAgent: ' + window.navigator.userAgent + '\n';
+        //     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
+        // }
         
-            this.resultField.innerText = text;
+        // function onSubmitionComplete(request) {
+        //     console.log(request);
+        // }
         
-            this.log('update 2');
-        }
+        // function update() {
+        //     this.log('update 1');
+        //     var text = '';
         
-        function getRenderer() {
-            return renderer || 'unknown';
-        }
+        //     text += 'Screen size: ' + screen.width + ' x ' +  screen.height + '\n';
+        //     text += 'Window size: ' + window.innerWidth + ' x ' +  window.innerHeight + '\n';
+        //     text += 'Renderer: ' + getRenderer() + '\n';
+        //     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
+        //     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
+        //     text += 'userAgent: ' + window.navigator.userAgent + '\n';
         
-        function getMaxAnisotropy() {
-            let max = 0;
+        //     this.resultField.innerText = text;
         
-            if (context) {
-                let extension = (
-                    context.getExtension('EXT_texture_filter_anisotropic') ||
-                    context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
-                    context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
-                );
+        //     this.log('update 2');
+        // }
         
-                if (extension) {
-                    max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-                }
-            }
+        // function getRenderer() {
+        //     return renderer || 'unknown';
+        // }
         
-            return max;
-        }
+        // function getMaxAnisotropy() {
+        //     let max = 0;
+        
+        //     if (context) {
+        //         let extension = (
+        //             context.getExtension('EXT_texture_filter_anisotropic') ||
+        //             context.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
+        //             context.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
+        //         );
+        
+        //         if (extension) {
+        //             max = context.getParameter(extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+        //         }
+        //     }
+        
+        //     return max;
+        // }
     </script>
 
 </body>
