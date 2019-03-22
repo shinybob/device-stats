@@ -1,8 +1,12 @@
 var canvas, context, renderer;
 
+console.log("main");
+
 window.onload = init;
 
 function init() {
+    console.log("init");
+    
     this.container = document.createElement('div');
 
     this.header = document.createElement('div');
@@ -10,7 +14,7 @@ function init() {
     this.deviceInput = document.createElement('input');
     this.additionalDataInput = document.createElement('input');
     this.submitButton = document.createElement('button');
-    
+
     this.submitButton.name = 'Send!';
     this.submitButton.innerText = 'Send!';
 
