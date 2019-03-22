@@ -77,18 +77,18 @@ function onSubmitClicked() {
 
     request.open('POST', '/addDevice', true);
     request.setRequestHeader('Content-type', 'application/json');
-    // request.onreadystatechange = () => {
-        // if (request.readyState === 4 && request.status === 200) {
-            // callback(request);
-        // }
-    // };
+    request.onreadystatechange = function() {
+        if (request.readyState === 4 && request.status === 200) {
+            callback(request);
+        }
+    };
 
-    // request.send(JSON.stringify(deviceData));
+    request.send(JSON.stringify(deviceData));
 
-//     console.log('onSubmitClicked');
-//     console.log(deviceData);
+    console.log('onSubmitClicked');
+    console.log(deviceData);
 
-//     this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
+    this.container.innerHTML = "Thank you!<br><br><a href='" + window.location + "getDeviceList'>Click here to view device list.</a>"
 }
 
 function logMessage(message) {
