@@ -6,7 +6,7 @@ function log(message) {
     field.innerText = message + '\n' + field.innerText;
 }
 
-window.onload = init;
+// window.onload = init;
 
 function init() {
     this.log('init 1');
