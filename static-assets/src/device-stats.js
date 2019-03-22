@@ -61,7 +61,7 @@ function init() {
 }
 
 function onSubmitClicked() {
-    this.logMessage('onSubmitClicked 1');
+    this.logMessage('onSubmitClicked 2');
     var deviceData = {
         deviceName:this.deviceInput.value,
         additionalData:this.additionalDataInput.value,
@@ -72,8 +72,8 @@ function onSubmitClicked() {
         devicePixelRatio:window.devicePixelRatio,
     }
 
-//     var callback = this.onSubmitionComplete.bind(this);
-//     var request = new XMLHttpRequest();
+    var callback = this.onSubmitionComplete.bind(this);
+    var request = new XMLHttpRequest();
 
 //     request.open('POST', '/addDevice', true);
 //     request.setRequestHeader('Content-type', 'application/json');
@@ -96,9 +96,9 @@ function logMessage(message) {
     field.innerText = message + "\n" + field.innerText;
 }
 
-// function onSubmitionComplete(request) {
-//     console.log(request);
-// }
+function onSubmitionComplete(request) {
+    console.log(request);
+}
 
 function update() {
     this.logMessage('update 1');
