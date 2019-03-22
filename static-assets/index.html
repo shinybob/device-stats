@@ -21,8 +21,6 @@
         }
         
         function init() {
-            logMessage('Woot!!!!');
-        
             this.container = document.createElement('div');
         
             this.header = document.createElement('div');
@@ -50,9 +48,6 @@
             // this.submitButton.id = 'submitButton';
         
             header.innerText = "Device Stats";
-            logMessage('Woot 2!!!!');
-        
-            // this.log('init 2');
         
             container.appendChild(header);
             container.appendChild(deviceInput);
@@ -70,7 +65,7 @@
                 if (canvas) {
                     context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
                     if (context) {
-                        let info = context.getExtension('WEBGL_debug_renderer_info');
+                        var info = context.getExtension('WEBGL_debug_renderer_info');
                         if (info) {
                             renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
                         }
