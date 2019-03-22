@@ -20,14 +20,14 @@ function init() {
     this.deviceInput.className = 'input';
     this.additionalDataInput.className = 'input';
     this.submitButton.className = 'button';
-    // this.deviceInput.placeholder = 'Device Name';
-    // this.additionalDataInput.placeholder = 'Additional Data';
+    this.deviceInput.placeholder = 'Device Name';
+    this.additionalDataInput.placeholder = 'Additional Data';
 
     // this.submitButton.addEventListener('click', this.onSubmitClicked.bind(this))
 
-    // this.deviceInput.id = 'deviceName';
-    // this.additionalDataInput.id = 'additionalData';
-    // this.submitButton.id = 'submitButton';
+    this.deviceInput.id = 'deviceName';
+    this.additionalDataInput.id = 'additionalData';
+    this.submitButton.id = 'submitButton';
 
     header.innerText = "Device Stats";
 
@@ -43,17 +43,17 @@ function init() {
 
     document.body.appendChild(this.container);
 
-    // canvas = document.createElement('canvas');
+    canvas = document.createElement('canvas');
 
-    // if (canvas) {
-    //     context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    //     if (context) {
-    //         var info = context.getExtension('WEBGL_debug_renderer_info');
-    //         if (info) {
-    //             renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
-    //         }
-    //     }
-    // }
+    if (canvas) {
+        context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (context) {
+            var info = context.getExtension('WEBGL_debug_renderer_info');
+            if (info) {
+                renderer = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+            }
+        }
+    }
 
     this.logMessage('init 3');
 
