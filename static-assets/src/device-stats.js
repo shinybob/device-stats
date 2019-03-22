@@ -75,13 +75,13 @@ function onSubmitClicked() {
     var callback = this.onSubmitionComplete.bind(this);
     var request = new XMLHttpRequest();
 
-//     request.open('POST', '/addDevice', true);
-//     request.setRequestHeader('Content-type', 'application/json');
-//     request.onreadystatechange = () => {
-//         if (request.readyState === 4 && request.status === 200) {
-//             callback(request);
-//         }
-//     };
+    request.open('POST', '/addDevice', true);
+    request.setRequestHeader('Content-type', 'application/json');
+    request.onreadystatechange = () => {
+        if (request.readyState === 4 && request.status === 200) {
+            callback(request);
+        }
+    };
 
 //     request.send(JSON.stringify(deviceData));
 
