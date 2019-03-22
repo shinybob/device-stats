@@ -64,7 +64,11 @@
         
             document.body.appendChild(this.container);
         
-            canvas = document.createElement('canvas');
+            try {
+                canvas = document.createElement('canvas');
+            } catch(e) {
+                logMessage('cant create canvas');
+            }
         
             if (canvas) {
                 context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
