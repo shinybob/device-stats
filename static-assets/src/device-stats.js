@@ -77,13 +77,13 @@ function onSubmitClicked() {
 
     request.open('POST', '/addDevice', true);
     request.setRequestHeader('Content-type', 'application/json');
-    request.onreadystatechange = () => {
-        if (request.readyState === 4 && request.status === 200) {
-            callback(request);
-        }
-    };
+    // request.onreadystatechange = () => {
+        // if (request.readyState === 4 && request.status === 200) {
+            // callback(request);
+        // }
+    // };
 
-//     request.send(JSON.stringify(deviceData));
+    // request.send(JSON.stringify(deviceData));
 
 //     console.log('onSubmitClicked');
 //     console.log(deviceData);
