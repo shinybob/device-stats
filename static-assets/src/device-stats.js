@@ -1,8 +1,7 @@
 var canvas, context, renderer;
 
-
 function log(message) {
-    let field = document.getElementById('log')
+    var field = document.getElementById('log')
     field.innerText = message + '\n' + field.innerText;
 }
 
