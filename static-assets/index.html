@@ -7,7 +7,7 @@
     <title>device-stats</title>
 
 </head>
-<body>
+<body onload="init()">
 
     <div class="log" id="log">logs 2</div>
 
@@ -18,17 +18,11 @@
             field.innerText = message + "\n" + field.innerText;
         }
 
-        logMessage("hello world!");
-        // var canvas, context, renderer;
+        function init() {
+            logMessage('loaded');
+        }
 
-        // function log(message) {
-        //     var field = document.getElementById("log")
-        //     field.innerText = message + "\n" + field.innerText;
-        // }
-        
-        // setTimeout(init, 1000);
-        
-        // // window.onload = init;
+        // var canvas, context, renderer;
         
         // function init() {
         //     var field = document.getElementById("log")
