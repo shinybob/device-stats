@@ -10,8 +10,8 @@ const DB_1_NAME = 'device-stats';
 const DB_1_COLLECTION = 'deviceStats';
 
 // Private
-const DB_2_URL = 'mongodb://localhost:27017/device-stats';
-// const DB_2_URL = 'mongodb://10.225.179.18:27017/device-stats';
+// const DB_2_URL = 'mongodb://localhost:27017/device-stats';
+const DB_2_URL = 'mongodb://10.225.179.18:27017/device-stats';
 const DB_2_NAME = 'device-stats';
 const DB_2_COLLECTION = 'devices';
 
@@ -23,11 +23,12 @@ async function init() {
     db1 = await connect(DB_1_URL, DB_1_NAME, DB_1_COLLECTION);
     db2 = await connect(DB_2_URL, DB_2_NAME, DB_2_COLLECTION);
 
+    // empty();
     merge();
 }
 
 function empty() {
-    db2.deleteMany({});
+    db2.deleteMany({testObject:true});
     console.log('done')
 }
 
@@ -53,10 +54,11 @@ async function merge() {
                     userAgent:value1.userAgent,
                     renderer:value1.renderer,
                     maxAnisotropy:value1.maxAnisotropy,
+                    date:value1.date,
                     platform:'mobile'} },
                 { upsert:true }
             );
-            console.log('adding: ' + value1.deviceName);
+            console.log('adding: ' + value1.deviceName + ' ' + Date.now());
             console.log('done')
         } catch(e) {
             console.log(e);

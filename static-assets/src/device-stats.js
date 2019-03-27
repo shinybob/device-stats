@@ -70,6 +70,8 @@ function onSubmitClicked() {
         renderer:getRenderer(),
         maxAnisotropy:getMaxAnisotropy(),
         devicePixelRatio:window.devicePixelRatio,
+        date:Date.now(),
+        userAgent:window.navigator.userAgent
     }
 
     var callback = this.onSubmitionComplete.bind(this);
