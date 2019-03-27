@@ -15,51 +15,52 @@ const DB_2_URL = 'mongodb://localhost:27017/device-stats';
 const DB_2_NAME = 'device-stats';
 const DB_2_COLLECTION = 'devices';
 
+let db1, db2;
+
 init();
 
 async function init() {
+    db1 = await connect(DB_1_URL, DB_1_NAME, DB_1_COLLECTION);
+    db2 = await connect(DB_2_URL, DB_2_NAME, DB_2_COLLECTION);
 
-    let db1 = await connect(DB_1_URL, DB_1_NAME, DB_1_COLLECTION);
-    let db2 = await connect(DB_2_URL, DB_2_NAME, DB_2_COLLECTION);
+    merge();
+}
 
+function empty() {
+    db2.deleteMany({});
+    console.log('done')
+}
+
+async function merge() {
     let list1 = await getDevices(db1);
-
-    let devicesToAdd = [];
     
     for (var value1 of list1) {
 
         let make = getMake(value1.deviceName);
         let model = formatModel(make, value1.deviceName);   
-
-        devicesToAdd.push({
-            testObject:true,
-            testObjectName:value1.deviceName,
-            make:make,
-            model:model,
-            screenWidth:value1.width,
-            screenHeight:value1.height,
-            pixelRatio:value1.devicePixelRatio,
-            userAgent:value1.userAgent,
-            renderer:value1.renderer,
-            maxAnisotropy:value1.maxAnisotropy,
-            active:false,
-            platform:'mobile'
-        });
-    }
-
-    try {
-        // db2.deleteMany( { testObject : true } ).then(() => {
-            // console.log ('done deleting');
-            devicesToAdd.forEach(element => {
-                db2.updateOne({testObjectName:element.testObjectName}, element, {upsert:true});
-                console.log ('adding: ' + element.testObjectName);
-            });
-        // })
-        // .catch(e => {
-            // console.log (e);
-        // });
-    } catch (e) {
-        console.log (e);
+        
+        try {
+            db2.update(
+                { testObjectName:value1.deviceName }, 
+                { $set: { 
+                    testObject:true,
+                    testObjectName:value1.deviceName,
+                    make:make,
+                    model:model,
+                    screenWidth:value1.width,
+                    screenHeight:value1.height,
+                    pixelRatio:value1.devicePixelRatio,
+                    userAgent:value1.userAgent,
+                    renderer:value1.renderer,
+                    maxAnisotropy:value1.maxAnisotropy,
+                    platform:'mobile'} },
+                { upsert:true }
+            );
+            console.log('adding: ' + value1.deviceName);
+            console.log('done')
+        } catch(e) {
+            console.log(e);
+        }
     }
 }
 
@@ -98,7 +99,7 @@ function getMake(deviceName) {
         make = 'Apple';
     }
 
-    return make
+    return make;
 }
 
 function isApple(make) {
