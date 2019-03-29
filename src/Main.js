@@ -1,4 +1,5 @@
 const Server = require("./Server");
+const TestObjectMerge = require('./TestObjectMerge');
 const MongoClient = require('mongodb').MongoClient;
 
 module.exports = class Main {
@@ -8,9 +9,9 @@ module.exports = class Main {
     }
 
     setupDatabase() {
-        const url = 'mongodb://shinybob:kennard@ds159509.mlab.com:59509/device-stats';
+        const TO_DB_URL = 'mongodb://shinybob:kennard@ds159509.mlab.com:59509/device-stats';
 
-        MongoClient.connect(url, (error, db) => {
+        MongoClient.connect(TO_DB_URL, (error, db) => {
             if(error) {
                 console.error("Error connecting to database!");
             } else {
@@ -28,12 +29,19 @@ module.exports = class Main {
 
     onServerCreated(port) {
         console.info("Server created on port:" + port);
+        this.testObjectMerge = new TestObjectMerge();
     }
 
     addDevice(deviceData) {
         try {
             console.log('addDevice');
-            this.db.insertOne( deviceData );
+            this.db.insertOne( deviceData )
+                .then(() => {
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
          } catch (e) {
             console.log (e);
          };
@@ -50,6 +58,11 @@ module.exports = class Main {
          };
     }
     
+    async merge() {
+        let result = await this.testObjectMerge.merge();
+        return result;
+    }
+
     getDevices() {
         let values = [];
         let cursor = this.db.find({});

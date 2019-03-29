@@ -9,8 +9,6 @@ module.exports = class Server {
 
         this.app.set('port', (process.env.PORT || 5000));
 
-        console.log("__dirname")
-        console.log(__dirname)
         this.app.use(express.static('./static-assets'));
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
@@ -21,6 +19,7 @@ module.exports = class Server {
     setupMessaging() {
         this.app.post('/addDevice', this.addDevice.bind(this));
         this.app.get('/getDeviceList', this.getDeviceList.bind(this));
+        this.app.get('/merge', this.merge.bind(this));
     }
 
     startServer(onSuccess) {
@@ -31,6 +30,11 @@ module.exports = class Server {
 
     addDevice(req, res) {
         this.main.addDevice(req.body);
+    }
+
+    async merge(req, res) {
+        var result = await this.main.merge();
+        res.send(result);
     }
 
     async getDeviceList(req, res) {
