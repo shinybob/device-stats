@@ -11,7 +11,7 @@ const DB_1_COLLECTION = 'deviceStats';
 
 // Private
 // const DB_2_URL = 'mongodb://localhost:27017/device-stats';
-const DB_2_URL = 'mongodb://10.225.179.18:27017/device-stats';
+const DB_2_URL = 'mongodb://10.124.200.3:27017/device-stats';
 const DB_2_NAME = 'device-stats';
 const DB_2_COLLECTION = 'devices';
 
@@ -25,6 +25,29 @@ async function init() {
 
     // empty();
     merge();
+    // addNewField();
+}
+
+async function addNewField() {
+    let list = await getDevices(db2);
+
+    for (var value of list) {
+        let ratio = value.screenHeight / value.screenWidth;
+
+        // console.log(value);
+
+        try {
+            db2.update(
+                { _id:value._id }, 
+                { $set: { 
+                    screenRatio:ratio} },
+                { upsert:true }
+            );
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
 }
 
 function empty() {

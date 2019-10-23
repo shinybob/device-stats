@@ -70,6 +70,7 @@ function onSubmitClicked() {
         renderer:getRenderer(),
         maxAnisotropy:getMaxAnisotropy(),
         devicePixelRatio:window.devicePixelRatio,
+        ppi:getPPI(),
         date:Date.now(),
         userAgent:window.navigator.userAgent
     }
@@ -105,6 +106,7 @@ function update() {
     text += 'Renderer: ' + getRenderer() + '\n';
     text += 'Max Anisotropy: ' + getMaxAnisotropy() + '\n';
     text += 'devicePixelRatio: ' + window.devicePixelRatio + '\n';
+    text += 'ppi: ' + getPPI() + '\n';
     text += 'userAgent: ' + window.navigator.userAgent + '\n';
 
     this.resultField.innerText = text;
@@ -130,4 +132,13 @@ function getMaxAnisotropy() {
     }
 
     return max;
+}
+
+function getPPI() {
+    var element = document.createElement('div');
+    element.style.width = '1in';
+    document.body.appendChild(element);
+    var ppi = element.offsetWidth;
+    document.body.removeChild(element);
+    return ppi;
 }
