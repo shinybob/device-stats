@@ -16,7 +16,7 @@
         "babel-polyfill": "^6.26.0",
         "body-parser": "1.x",
         "express": "^4.16.3",
-        "mongodb": "2.x",
+        "mongodb": "3.x",
         "request": "^2.86.0",
         "superagent": "^3.8.3"
     },
