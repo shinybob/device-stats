@@ -12,7 +12,7 @@
     },
     "author": "rob.thurston",
     "dependencies": {
-        "async": "1.x",
+        "async": "3.x",
         "babel-polyfill": "^6.26.0",
         "body-parser": "1.x",
         "express": "^4.16.3",
